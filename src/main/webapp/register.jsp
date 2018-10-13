@@ -17,29 +17,27 @@
             <div class="column my-5">
               <h2 class="ui center aligned header">BookExchange</h2>
               <hr>
-              <form class="form-signin" action="login" method="post">
+              <form class="form-signin" action="register" method="post">
                 <div class="form-group">
                   <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"> 
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
               </form>
-              <p class="text-center mt-5">Are you new to BookExchange? <a href="register.jsp">Register here</a></p>
             </div>
             <div class="divider-column my-5"><div class="ui horizontal divider">
                 Or
             </div></div>   
             <div class="column my-5">
-              <button class="btn btn-block btn-login btn-google">Sign in with Google</button>
-              <button class="btn btn-block btn-login btn-twitter">Sign in with Twitter</button>
-              <button class="btn btn-block btn-login btn-facebook">Sign in with Facebook</button>
+              <button class="btn btn-block btn-login btn-google">Register with Google</button>
+              <button class="btn btn-block btn-login btn-twitter">Register with Twitter</button>
+              <button class="btn btn-block btn-login btn-facebook">Register with Facebook</button>
             </div>
         </div>               
     </div>        
 </div>
-
 
 
 <%@ include file="partials/footer.jsp" %>

@@ -1,0 +1,79 @@
+.login-form {
+	position: relative;
+}
+
+@media ( min-width : 767.98px) {
+    .h-md-100 {
+        height:  100%!important;
+    }
+}
+
+.book-background {
+	background-image: url(../images/book-background.png);
+	background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.divider-column {
+	position: relative;
+	padding: 0 !important;
+}
+
+.btn-login {
+	white-space: nowrap;
+	color: white;
+}
+
+.btn-login:before {
+	content: "";
+	font-family: "Font Awesome 5 Brands";
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	padding-right: 1rem;
+}
+
+/* FaceBook */
+.btn-facebook {
+	background-color: #4C69BA;
+	background-image: linear-gradient(#4C69BA, #3B55A0);
+	text-shadow: 0 -1px 0 #354C8C;
+}
+
+.btn-facebook:before {
+	content: "\f39e";
+}
+
+.btn-facebook:hover, .btn-facebook:focus {
+	background-color: #5B7BD5;
+	background-image: linear-gradient(#5B7BD5, #4864B1);
+}
+
+/* Twitter */
+.btn-twitter {
+	background: rgb(29, 161, 242);
+}
+
+.btn-twitter:before {
+	content: "\f099";
+}
+
+.btn-twitter:hover, .btn-twitter:focus {
+	background: rgb(29, 161, 242);
+}
+
+/* Google */
+.btn-google {
+	background: #DD4B39;
+}
+
+.btn-google:before {
+	content: "\f1a0";
+}
+
+.btn-google:hover, .btn-google:focus {
+	background: rgba(231, 75, 55, 0.88);
+}
