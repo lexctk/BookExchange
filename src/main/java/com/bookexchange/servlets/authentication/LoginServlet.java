@@ -1,11 +1,13 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import org.bson.Document;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,18 +43,25 @@ public class LoginServlet extends HttpServlet {
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 	
-		boolean isUserFound = Util.searchUser(email, password, database);
+		Document isUserFound = Util.searchUser(email.toLowerCase(), password, database);
 
 		
-		if (isUserFound) {
-			response.sendRedirect("/books");
+		if (isUserFound != null) {
+			request.setAttribute("username", isUserFound.get("username"));
+			request.setAttribute("firstname", isUserFound.get("firstname"));
+			request.setAttribute("lastname", isUserFound.get("lastname"));
+			
+			Cookie cookie = new Cookie("email", (String) isUserFound.get("email"));
+            response.addCookie(cookie);
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books");
+			requestDispatcher.forward(request, response);			
 			
 		} else {
 			
-			RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-			PrintWriter out = response.getWriter();
-			out.println("<font color=red>Email or password is wrong.</font>");
-			requestDispatcher.include(request, response);
+			request.setAttribute("message", "Email or password is wrong");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+			requestDispatcher.forward(request, response);
 		}
 
 	}

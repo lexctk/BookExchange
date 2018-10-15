@@ -17,6 +17,7 @@
             <div class="column my-5">
               <h2 class="ui center aligned header">BookExchange</h2>
               <hr>
+              <div class="error-message">${message}</div>
               <form class="form-signin" action="login" method="post">
                 <div class="form-group">
                   <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"> 
@@ -26,7 +27,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
               </form>
-              <p class="text-center mt-5">Are you new to BookExchange? <a href="register.jsp">Register here</a></p>
+              <p class="text-center mt-5">Are you new to BookExchange? <a href="register">Register here</a></p>
             </div>
             <div class="divider-column my-5"><div class="ui horizontal divider">
                 Or
@@ -39,7 +40,6 @@
         </div>               
     </div>        
 </div>
-
 
 
 <%@ include file="partials/footer.jsp" %>

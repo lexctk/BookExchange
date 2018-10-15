@@ -1,6 +1,8 @@
 package com.bookexchange.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,21 +38,9 @@ public class Books extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		MongoConnection mongo = MongoConnection.getInstance();
-		MongoDatabase database = mongo.database;
 		
-		MongoCollection<Document> collection = database.getCollection("books");
-
-		//find all documents in a Collection
-		MongoCursor<Document> cursor = collection.find().iterator();
-		try {
-			while (cursor.hasNext()) {
-				response.getWriter().append("All books ").append(cursor.next().toJson());
-			}
-		} finally {
-			cursor.close();
-		}
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 	/**

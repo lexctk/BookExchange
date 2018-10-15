@@ -15,16 +15,29 @@ public class Util {
     	return database.getCollection(collectionName);
     }
 
-	public static boolean searchUser (String email, String password, MongoDatabase database) {
-		boolean userFound = false;
+	public static Document searchUser (String email, String password, MongoDatabase database) {
+		Document userFound = null;
 		
 		MongoCollection<Document> collection = database.getCollection("users");
 		
 		FindIterable<Document> it = collection.find(and(eq("email", email), eq("password", password)));
 		for(@SuppressWarnings("unused") Document doc : it) {
-			userFound = true;
+			userFound = doc;
 		}
 
 		return userFound;
 	}
+	
+	public static boolean searchEmail (String email, MongoDatabase database) {
+		boolean emailFound = false;
+		
+		MongoCollection<Document> collection = database.getCollection("users");
+		
+		FindIterable<Document> it = collection.find(eq("email", email));
+		for(@SuppressWarnings("unused") Document doc : it) {
+			emailFound = true;
+		}
+
+		return emailFound;
+	}	
 }

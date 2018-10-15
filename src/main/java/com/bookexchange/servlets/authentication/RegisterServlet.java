@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,23 +39,36 @@ public class RegisterServlet extends HttpServlet {
 		// get request parameters for userID and password
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String username = request.getParameter("username");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
-		boolean isUserFound = Util.searchUser(email, password, database);
+		boolean isEmailFound = Util.searchEmail(email, database);
 
 		
-		if (isUserFound) {
-			//TODO: display "user already exists message"
-			response.sendRedirect("login");
+		if (isEmailFound) {
+			request.setAttribute("message", "Email already registered");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+			requestDispatcher.forward(request, response);			
 			
 		} else {
 			
-			Document doc = new Document("email", email).append("password", password);
+			Document doc = new Document("email", email).append("password", password)
+					.append("username", username).append(firstname, firstname).append(lastname, lastname);
 			MongoCollection<Document> collection = Util.collection(database, "users");
+			
 			collection.insertOne(doc);
 			
+			request.setAttribute("username", username);
+			request.setAttribute("firstname", firstname);
+			request.setAttribute("lastname", lastname);
+			
+			Cookie cookie = new Cookie("email", email);
+            response.addCookie(cookie);
+            
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books");
 			requestDispatcher.forward(request, response);
 		}
