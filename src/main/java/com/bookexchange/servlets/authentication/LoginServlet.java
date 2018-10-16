@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
@@ -28,10 +29,10 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
 		requestDispatcher.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,20 +48,29 @@ public class LoginServlet extends HttpServlet {
 
 		
 		if (isUserFound != null) {
-			request.setAttribute("username", isUserFound.get("username"));
-			request.setAttribute("firstname", isUserFound.get("firstname"));
-			request.setAttribute("lastname", isUserFound.get("lastname"));
 			
-			Cookie cookie = new Cookie("email", (String) isUserFound.get("email"));
+			//get the old session and invalidate
+            HttpSession oldSession = request.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
+            }
+            //generate a new session
+            HttpSession newSession = request.getSession(true);
+            newSession.setAttribute("username", (String) isUserFound.get("username"));
+            
+            //setting session to expire
+            newSession.setMaxInactiveInterval(15*60);
+
+            Cookie cookie = new Cookie("username", (String) isUserFound.get("username"));
             response.addCookie(cookie);
-			
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books");
-			requestDispatcher.forward(request, response);			
+            
+			response.sendRedirect("app/books");
 			
 		} else {
 			
 			request.setAttribute("message", "Email or password is wrong");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
 			requestDispatcher.forward(request, response);
 		}
 

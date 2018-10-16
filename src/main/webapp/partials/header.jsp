@@ -15,7 +15,7 @@
 		<!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
 		
-		<link rel="stylesheet" href="resources/styles/main.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/main.css" />
 		
 		<title>BookExchange</title>
 	</head>

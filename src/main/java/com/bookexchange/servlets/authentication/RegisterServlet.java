@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
 
@@ -51,26 +52,34 @@ public class RegisterServlet extends HttpServlet {
 		
 		if (isEmailFound) {
 			request.setAttribute("message", "Email already registered");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
 			requestDispatcher.forward(request, response);			
 			
 		} else {
-			
 			Document doc = new Document("email", email).append("password", password)
 					.append("username", username).append(firstname, firstname).append(lastname, lastname);
 			MongoCollection<Document> collection = Util.collection(database, "users");
 			
 			collection.insertOne(doc);
 			
-			request.setAttribute("username", username);
-			request.setAttribute("firstname", firstname);
-			request.setAttribute("lastname", lastname);
+			//get the old session and invalidate
+            HttpSession oldSession = request.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
+            }
 			
-			Cookie cookie = new Cookie("email", email);
-            response.addCookie(cookie);
+            //generate a new session
+            HttpSession newSession = request.getSession(true);
             
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books");
-			requestDispatcher.forward(request, response);
+            newSession.setAttribute("username", username);
+            
+            //setting session to expire
+            newSession.setMaxInactiveInterval(15*60);
+
+            Cookie cookie = new Cookie("username", username);
+            response.addCookie(cookie);	
+            
+            response.sendRedirect("app/books");
 		}
 
 	}

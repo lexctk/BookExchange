@@ -83,3 +83,115 @@
 .btn-google:hover, .btn-google:focus {
 	background: rgba(231, 75, 55, 0.88);
 }
+
+
+
+/* Header */
+
+header {
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	animation: 1s fadein .4s forwards;
+	z-index: 1;
+}
+
+nav {
+	padding: 5px;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;	
+}
+
+.nav-link {
+	padding: 6px 10px;
+	margin: 5px;
+	color: white;
+	text-transform: uppercase;	
+	font-size: 18px;
+}
+
+.nav-link:hover {
+	color: #ff9800;
+}
+
+.nav-brand {
+	margin-right: auto;
+}
+
+@keyframes fadein {
+	100% {
+		opacity: 1;
+	}
+}
+
+/* Hero */
+
+.fullscreen {
+	min-height: 100vh;
+}
+
+section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  justify-content: center;
+}
+
+.hero {
+	position: relative;
+	justify-content: center;
+	text-align: center;
+}
+
+
+.parallax {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	
+	/* Create the parallax scrolling effect */
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.hero-item {
+	text-shadow: rgba(0, 0, 0, 0.5) 0px 0px 20px;
+	color: white;
+	opacity: 0;
+	transform: translateY(60px);
+}
+
+p.hero-item {
+	font-size: 18px;
+	font-weight: 300;
+}
+
+.hero h1 {
+	animation: .8s swoopUp .6s forwards;
+}
+
+.hero h1:first-child {
+    margin-top: 3em;
+}
+
+.hero p {
+	animation: .4s swoopUp 1s forwards;
+}
+
+.hero a {
+	animation: .2s swoopUp 1.4s forwards;
+}
+
+@keyframes swoopUp {
+	100% {
+		transform: translateY(-60px);
+		opacity: 1;
+	}
+}
+

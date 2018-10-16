@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -24,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
     	
     	if (cookies != null) {
 	    	for (Cookie cookie : cookies) {
-	    		if (cookie.getName().equals("email")) {
+	    		if (cookie.getName().equals("username")) {
 	    			loginCookie = cookie;
 	    			break;
 	    		}
@@ -35,6 +36,12 @@ public class LogoutServlet extends HttpServlet {
     		loginCookie.setMaxAge(0);
         	response.addCookie(loginCookie);
     	}
+    	
+        HttpSession oldSession = request.getSession(false);
+        if (oldSession != null) {
+            oldSession.invalidate();
+        }
+        
     	response.sendRedirect("login");
     }
 

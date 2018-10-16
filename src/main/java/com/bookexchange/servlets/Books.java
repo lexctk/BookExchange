@@ -9,19 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bson.Document;
-
-import com.bookexchange.mongodb.util.MongoConnection;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
-
 /**
  * Servlet implementation class Books
  */
-@WebServlet("/books")
+@WebServlet("/app/books")
 public class Books extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
