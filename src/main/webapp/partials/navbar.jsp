@@ -3,10 +3,9 @@
 
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark" >
-		<ul class="navbar-nav mr-auto">
-			<img src="../resources/images/logo.png" alt="logo" style="width:230px;height:50px;"></img>
-	
-		</ul>
+		<a class="navbar-brand" href="#">
+			<img class='logo' src="../resources/images/logo.png" alt="logo"></img>
+		</a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
