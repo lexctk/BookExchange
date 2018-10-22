@@ -30,8 +30,7 @@ public class Books extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/books.jsp");
-		requestDispatcher.forward(request, response);
+		request.getRequestDispatcher("/books.jsp").forward(request, response);
 	}
 
 	/**

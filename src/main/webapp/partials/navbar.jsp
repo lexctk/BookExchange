@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <header>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark" >
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="#">BookExchange</a></li>
+			<img src="../resources/images/logo.png" alt="logo" style="width:230px;height:50px;"></img>
+	
 		</ul>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -14,14 +15,22 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse " id="navbarSupportedContent" >
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">My Books<span class="sr-only">(current)</span></a>
+			    <li class="nav-item active">
+					<a class="nav-link text-white" href="#">Home<span class="sr-only">(current)</span></a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Events</a></li>
+				<li class="nav-item active">
+					<a class="nav-link text-white" href="#">Library<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link text-white" href="#">My Books<span class="sr-only">(current)</span></a>
+				</li>
+				
+				<li class="nav-item"><a class="nav-link text-white" href="#">Events</a></li>
+				
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> Account </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 		<div class="spacer"></div>
 		<div class="container">
-		    <div class="spacer text-center"><small class="text-muted">&copy; BookExchange</small></div>
+		    <div class="spacer text-center"><small class="text-muted">&copy; Book Exchange</small></div>
 		</div>
 		<div class="spacer"></div>
 		
@@ -20,5 +20,8 @@
 		
 		<!-- Semantic UI -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
+
+		<!-- Book App -->
+		<script src="${pageContext.request.contextPath}/resources/scripts/main.js"></script>
 	</body>
 </html>

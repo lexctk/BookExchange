@@ -3,14 +3,18 @@
 <%@ include file="partials/header.jsp" %>
 
 <div class="row h-md-100">
-    <div class="col-sm-12 col-md-6 book-background">
-        <div class="ui right aligned basic segment m-lg-5">
-            <div class="column my-5">
-                <h2 class="ui right aligned header"><i class="fas fa-search"></i> Search for books</h2>
-                <h2 class="ui right aligned header"><i class="fas fa-users"></i> Exchange</h2>
-                <h2 class="ui right aligned header"><i class="fas fa-book-reader"></i> Find events near you</h2>
-            </div>
-        </div>        
+    <div class="col-sm-12 col-md-6 book-background hero">
+		<div class='hero-content'>
+			<h1 class='hero-item dark item1'>
+				<i class="fas fa-search"></i> Search for books
+			</h1>
+			<h1 class='hero-item dark item2'>
+				<i class="fas fa-users"></i> Exchange
+			</h1>
+			<h1 class='hero-item dark item3'>
+				<i class="fas fa-book-reader"></i> Find events near you
+			</h1>
+		</div>
     </div>
     <div class="col-sm-12 col-md-6">
           <div class="ui center aligned basic segment m-lg-5">
