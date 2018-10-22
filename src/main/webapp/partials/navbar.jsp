@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <header>
-	<nav class="navbar navbar-expand-lg navbar-light bg-dark" >
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-toggle="affix"><div class="container-fluid">
 		<a class="navbar-brand" href="#">
-			<img class='logo' src="../resources/images/logo.png" alt="logo"></img>
+			<img class='logo' src="../resources/images/logo-mini.png" alt="logo"></img>
+			<strong>BOOK</strong> Exchange
 		</a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -43,5 +44,5 @@
 				</li>
 			</ul>
 		</div>
-	</nav>
+	</div></nav>
 </header>

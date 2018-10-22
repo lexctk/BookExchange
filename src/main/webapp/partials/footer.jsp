@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-		<div class="spacer"></div>
-		<div class="container">
-		    <div class="spacer text-center"><small class="text-muted">&copy; Book Exchange</small></div>
-		</div>
-		<div class="spacer"></div>
-		
+		<footer>
+			<div class="container">
+			    <div class="spacer text-center"><small class="text-muted">&copy; Book Exchange</small></div>
+			</div>
+		</footer>
 		
 		<!-- JavaScript -->
 		

@@ -1,8 +1,9 @@
+// Fix to top with data-toggle="affix"
 $(document).ready(function() {
 
-  var toggleAffix = function(affixElement, scrollElement, wrapper) {
+  let toggleAffix = function(affixElement, scrollElement, wrapper) {
   
-    var height = affixElement.outerHeight(),
+    let height = affixElement.outerHeight(),
         top = wrapper.offset().top;
     
     if (scrollElement.scrollTop() >= top){
@@ -17,23 +18,23 @@ $(document).ready(function() {
   };
 
   $('[data-toggle="affix"]').each(function() {
-    var element = $(this),
+    let element = $(this),
         wrapper = $('<div></div>');
     
     element.before(wrapper);
     $(window).on('scroll resize', function() {
-        toggleAffix(element, $(this), wrapper);
+    	toggleAffix(element, $(this), wrapper);
     });
     
     // initialize
-    toggleAffix(element, $(window), wrapper);
+    // toggleAffix(element, $(window), wrapper);
   });
   
 });
 
 
-//Smooth scroll to a destination
-var $root = $('html, body');
+// Smooth scroll to a destination
+let $root = $('html, body');
 
 $('a[href^="#"]').click(function () {
     $root.animate({
@@ -44,8 +45,8 @@ $('a[href^="#"]').click(function () {
 
 // Back to top button
 jQuery(document).ready(function() {
-    var offset = 250;
-    var duration = 300;
+    let offset = 250;
+    let duration = 300;
     
     jQuery(window).scroll(function() {
         if (jQuery(this).scrollTop() > offset) {
