@@ -17,7 +17,7 @@
 	</div>
 </section>
 
-<section id='selection' class='fullscreen'>
+<section id='selection' class='fullscreen spacer'>
 	<div class="container-fluid" >
 		<div class="row">
 			<div class="col-xs-12 col-md-8 col-lg-9">
@@ -55,7 +55,5 @@
 		</div>
 	</div>
 </section>
-
-<div class="spacer"></div>
 
 <%@ include file="partials/footer.jsp" %>

@@ -18,24 +18,24 @@
 		<div class="collapse navbar-collapse " id="navbarSupportedContent" >
 			<ul class="navbar-nav ml-auto">
 			    <li class="nav-item active">
-					<a class="nav-link text-white" href="#">Home<span class="sr-only">(current)</span></a>
+					<a class="nav-link text-white" href="books">Home<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link text-white" href="#">Library<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link text-white" href="#">My Books<span class="sr-only">(current)</span></a>
+					<a class="nav-link text-white" href="profile">My Books<span class="sr-only">(current)</span></a>
 				</li>
 				
 				<li class="nav-item"><a class="nav-link text-white" href="#">Events</a></li>
 				
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown"
+					class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown"
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> Account </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Signed in as ${username}</a> 
-						<a class="dropdown-item" href="#">My Books</a>
+						<a class="dropdown-item" href="profile">Signed in as ${username}</a> 
+						<a class="dropdown-item" href="profile">My Books</a>
 						<div class="dropdown-divider"></div>
 						<form action="${pageContext.request.contextPath}/logout" method="POST">
 							<button type="submit" class="btn btn-link dropdown-item">Logout</button>

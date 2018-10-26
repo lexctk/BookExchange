@@ -63,3 +63,9 @@ jQuery(document).ready(function() {
     });
 });
 
+
+// Sticky user profile
+$('.ui.sticky').sticky({
+	context: '#viewport',
+	offset: 128
+});
