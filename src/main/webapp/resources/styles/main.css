@@ -271,6 +271,23 @@ p.hero-item {
 /* ----------------------------------------------------------------------------- */
 
 
+/* -------------------------------- API results -------------------------------- */
+
+.api-results {
+	min-height: 200px;
+}
+
+.fa-book {
+	font-size: 5em;
+	padding: 30px;
+	border-radius: 100px;
+	border: 6px solid grey;
+	color: grey;
+}
+/* ----------------------------------------------------------------------------- */
+
+
+
 .book-background { /* fullscreen parallax background */
 	background-image: url(../images/book-background.png);
 	background-position: left;
@@ -283,6 +300,7 @@ footer {
 	background-color: #343a40;
 	padding: 2em 0;
 }
+
 
 
 /* -------------------------- TODO: delete if unused --------------------------- */

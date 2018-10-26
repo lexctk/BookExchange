@@ -8,10 +8,10 @@ $(document).ready(function() {
     
     if (scrollElement.scrollTop() >= top){
         wrapper.height(height);
-        affixElement.addClass("affix");
+        affixElement.addClass('affix');
     }
     else {
-        affixElement.removeClass("affix");
+        affixElement.removeClass('affix');
         wrapper.height('auto');
     }
       
@@ -68,4 +68,22 @@ jQuery(document).ready(function() {
 $('.ui.sticky').sticky({
 	context: '#viewport',
 	offset: 128
+});
+
+// Call servlet from form, inject response in #searchAPIResults
+$(function() {
+	$('#searchAPI').on('submit', function(e) { 
+		e.preventDefault();
+		var searchQuery = $("#searchAPI :input").serializeArray();
+		
+		$.ajax({
+			url: '../searchapi',
+			type: 'GET',
+			data: searchQuery,
+			success: function(responseText) {
+				console.log(responseText);
+				$('#searchAPIResults').text(responseText);
+			}
+		});
+	});
 });
