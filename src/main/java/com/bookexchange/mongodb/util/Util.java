@@ -21,7 +21,7 @@ public class Util {
 		MongoCollection<Document> collection = database.getCollection("users");
 		
 		FindIterable<Document> it = collection.find(and(eq("email", email), eq("password", password)));
-		for(@SuppressWarnings("unused") Document doc : it) {
+		for(Document doc : it) {
 			userFound = doc;
 		}
 

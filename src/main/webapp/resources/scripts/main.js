@@ -63,26 +63,19 @@ jQuery(document).ready(function() {
     });
 });
 
-
-// Sticky user profile
-$('.ui.sticky').sticky({
-	context: '#viewport',
-	offset: 128
-});
-
 // Call servlet from form, inject response in #searchAPIResults
 $(function() {
 	$('#searchAPI').on('submit', function(e) { 
 		e.preventDefault();
-		var searchQuery = $("#searchAPI :input").serializeArray();
+		var query = $('#searchAPI :input').serializeArray();
 		
 		$.ajax({
 			url: '../searchapi',
 			type: 'GET',
-			data: searchQuery,
-			success: function(responseText) {
-				console.log(responseText);
-				$('#searchAPIResults').text(responseText);
+			data: query,
+			success: function(response) {
+				
+				$('#searchAPIResults').html(response);
 			}
 		});
 	});

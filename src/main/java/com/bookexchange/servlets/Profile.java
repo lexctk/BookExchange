@@ -27,6 +27,9 @@ public class Profile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setAttribute("thumbnail", request.getContextPath() + "/resources/images/new_book.png");
+		request.setAttribute("title", "Add new");
+		request.setAttribute("link", request.getContextPath() + "/app/books/newsearch");
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 	}
 

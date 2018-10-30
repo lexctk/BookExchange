@@ -24,7 +24,7 @@
 				<h2>Latest Books</h2>
 				<div class="row">
 					<div class="col-6 col-md-4 col-lg-2">
-						<jsp:include page="partials/book.jsp" >
+						<jsp:include page="books/book.jsp" >
 							<jsp:param name="thumbnail" value="https://books.google.com/books/content?id=W05ZDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" />
 							<jsp:param name="title" value="The Alchimist" />
 							<jsp:param name="author" value="Paolo Coelho" />

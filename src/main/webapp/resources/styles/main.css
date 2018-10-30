@@ -1,5 +1,18 @@
 /* ---------------------------------- Buttons ---------------------------------- */
 
+.btn-load-more {
+	border: 1px solid #212529;
+	height: 50px;
+	width: 200px;
+	border-radius: 30px;
+}
+
+.btn-skip {
+	border: 1px solid #212529;
+	height: 50px;
+	width: 200px;
+}
+
 .btn-login {
 	white-space: nowrap;
 	color: white;
@@ -284,9 +297,17 @@ p.hero-item {
 	border: 6px solid grey;
 	color: grey;
 }
+
+.hints {
+	text-align: center;
+	margin-top: 20px;
+	color: grey;
+}
 /* ----------------------------------------------------------------------------- */
 
-
+.hidden {
+	display:none;
+}
 
 .book-background { /* fullscreen parallax background */
 	background-image: url(../images/book-background.png);
@@ -300,7 +321,6 @@ footer {
 	background-color: #343a40;
 	padding: 2em 0;
 }
-
 
 
 /* -------------------------- TODO: delete if unused --------------------------- */

@@ -36,7 +36,9 @@ public class Books extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO add book to database:
+		System.out.println(request.getParameter("thumbnail"));
+		System.out.println(request.getParameter("title"));
 		doGet(request, response);
 	}
 

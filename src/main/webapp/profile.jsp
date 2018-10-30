@@ -7,8 +7,8 @@
 <section id='selection' class='fullscreen spacer-navbar'>
 	<div class="container-fluid" >
 		<div class="row">
-			<div class="col-xs-12 col-md-4 col-lg-3 spacer">
-				<div class="ui raised card sticky">
+			<div class="col-12 col-md-4 col-lg-3 spacer">
+				<div class="ui raised card">
 					<div class="image">
 						<img src="../resources/images/user_turquoise.png">
 					</div>
@@ -27,16 +27,10 @@
 					</div>				  
 				</div>				
 			</div>
-			<div class="col-xs-12 col-md-8 col-lg-9 spacer" id="viewport">
+			<div class="col-12 col-md-8 col-lg-9 spacer" id="viewport">
 				<h2>My Books</h2>
 				<div class="row">
-					<div class="col-6 col-md-4 col-lg-2">
-						<jsp:include page="partials/book.jsp" >
-							<jsp:param name="thumbnail" value="../resources/images/new_book.png" />
-							<jsp:param name="title" value="Add new" />
-							<jsp:param name="link" value="${pageContext.request.contextPath}/app/books/new" />
-						</jsp:include>
-					</div>
+					<%@ include file="books/book.jsp" %>
 					<div class="col-6 col-md-4 col-lg-2">
 
 					</div>

@@ -3,7 +3,7 @@
 
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-toggle="affix"><div class="container-fluid">
-		<a class="navbar-brand" href="#">
+		<a class="navbar-brand" href="${pageContext.request.contextPath}/app/books">
 			<img class='logo' src="${pageContext.request.contextPath}/resources/images/logo-mini.png" alt="logo"></img>
 			<strong>BOOK</strong> Exchange
 		</a>
@@ -18,13 +18,13 @@
 		<div class="collapse navbar-collapse " id="navbarSupportedContent" >
 			<ul class="navbar-nav ml-auto">
 			    <li class="nav-item active">
-					<a class="nav-link text-white" href="books">Home<span class="sr-only">(current)</span></a>
+					<a class="nav-link text-white" href="${pageContext.request.contextPath}/app/books">Home<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link text-white" href="#">Library<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link text-white" href="profile">My Books<span class="sr-only">(current)</span></a>
+					<a class="nav-link text-white" href="${pageContext.request.contextPath}/app/profile">My Books<span class="sr-only">(current)</span></a>
 				</li>
 				
 				<li class="nav-item"><a class="nav-link text-white" href="#">Events</a></li>
@@ -34,8 +34,8 @@
 					role="button" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false"> Account </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="profile">Signed in as ${username}</a> 
-						<a class="dropdown-item" href="profile">My Books</a>
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">Signed in as ${username}</a> 
+						<a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">My Books</a>
 						<div class="dropdown-divider"></div>
 						<form action="${pageContext.request.contextPath}/logout" method="POST">
 							<button type="submit" class="btn btn-link dropdown-item">Logout</button>
