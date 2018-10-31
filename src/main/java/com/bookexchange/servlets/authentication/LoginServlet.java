@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 	
-		Document isUserFound = Util.searchUser(email.toLowerCase(), password, database);
+		Document isUserFound = Util.authenticateUser(email.toLowerCase(), password, database);
 
 		
 		if (isUserFound != null) {
@@ -57,6 +57,9 @@ public class LoginServlet extends HttpServlet {
             //generate a new session
             HttpSession newSession = request.getSession(true);
             newSession.setAttribute("username", (String) isUserFound.get("username"));
+            newSession.setAttribute("email", (String) isUserFound.get("email"));
+            newSession.setAttribute("firstname", (String) isUserFound.get("firstname"));
+            newSession.setAttribute("lastname", (String) isUserFound.get("lastname"));
             
             //setting session to expire
             newSession.setMaxInactiveInterval(15*60);

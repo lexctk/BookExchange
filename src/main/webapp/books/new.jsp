@@ -4,8 +4,10 @@
 
 <%@ include file="../partials/navbar.jsp" %>
 <%
-//TODO: form inputs should be disabled if values are already filled out from API
-//TODO: needs input for book trade type/location? 
+// TODO:
+// Used for debugging
+// Skip this form completely if found book via API, extra step is pointless! 
+// Needs input for book trade type/location
 %>
 <section id='selection' class='fullscreen spacer-navbar'>
 	<div class="container">
@@ -24,7 +26,7 @@
 			</div>
 			</div>
 			<div class="col-12 col-md-8 col-lg-9">
-				<form class="ui equal width form" id="new_book" action="${pageContext.request.contextPath}/app/books" method="POST">
+				<form class="ui equal width form" id="new_book" accept-charset="UTF-8" action="${pageContext.request.contextPath}/app/books" method="POST">
 					<div class="fields">
 						<div class="field">
 							<label>Title</label>
@@ -59,7 +61,8 @@
 							<% } %>
 						</div>
 					</div>
-					<input name="thumbnail" id="thumbnail" class="hidden" type="text" value="${thumbnail}">
+					<input name="thumbnail" id="thumbnail" class="hidden" type="url" value="${thumbnail}">
+					<input name="id" id="id" class="hidden" type="text" value="${id}">
 					<button class="btn btn-light btn-lg btn-skip" type="submit">Add</button>
 				</form>
 			</div>

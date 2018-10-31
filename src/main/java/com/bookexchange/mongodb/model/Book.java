@@ -9,15 +9,18 @@ import java.util.Objects;
  *
  */
 public class Book {
-	
+
 	private String id;
 	private VolumeInfo volumeInfo;
+	
+	public Book () {
+	}
 
 	public String getId() {
 		return Objects.toString(id, "");
 	}
 
-	public void setId(String id) {
+	public void setIdAPI(String id) {
 		this.id = id;
 	}
 

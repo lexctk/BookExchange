@@ -13,15 +13,7 @@ public class User {
 	private String password;
 	private boolean isAdmin;
 
-	public User() {}
-
-	public User(ObjectId _id, String username, String firstname, String lastname, String email, String password) {
-		this._id = _id;
-		this.setUsername(username);
-		this.setFirstname(firstname);
-		this.setLastname(lastname);
-		this.setEmail(email);
-		this.setPassword(password);
+	public User() {
 	}
 	
 	public ObjectId getId() {

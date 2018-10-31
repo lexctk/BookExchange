@@ -1,6 +1,7 @@
 package com.bookexchange.mongodb.model;
 
 public class VolumeInfo {
+	
 	private String title;
 	private String [] authors;
 	private String description;
@@ -8,6 +9,9 @@ public class VolumeInfo {
 	private String language;
 	private ImageLinks imageLinks;
 	private IndustryIdentifiers [] industryIdentifiers;
+	
+	public VolumeInfo () {
+	}
 	
 	public String getTitle() {
 		return title;

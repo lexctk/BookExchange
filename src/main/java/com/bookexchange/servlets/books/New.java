@@ -57,7 +57,7 @@ public class New extends HttpServlet {
 				}
 			}
 		}
-		
+		request.setCharacterEncoding("UTF-8");
 		request.getRequestDispatcher("/books/new.jsp").forward(request, response);
 	}
 

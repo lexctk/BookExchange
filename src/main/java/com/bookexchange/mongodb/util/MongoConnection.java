@@ -1,6 +1,7 @@
 package com.bookexchange.mongodb.util;
 
 import com.mongodb.client.MongoClients;
+import com.bookexchange.util.PropertiesUtil;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
@@ -13,12 +14,13 @@ public class MongoConnection {
 	
 	private MongoConnection() {
 		
-		//TODO
-		//String mlab = System.getenv("MLAB");
-		String mlab = "mongodb://book_adm:cAsbid-fokdyz-2vidbi@ds115523.mlab.com:15523/book_exchange";
+		//get mlab url from environment variable or from properties file
+		String mlab = System.getenv("MLAB");
+		if (mlab == null) mlab = PropertiesUtil.getValue ("MLAB");
 
-		mongo = MongoClients.create (mlab);
-		database = mongo.getDatabase("book_exchange");		
+		mongo = MongoClients.create(mlab);
+		
+		database = mongo.getDatabase("book_exchange");
 	}
 	
 	public static MongoConnection getInstance() {

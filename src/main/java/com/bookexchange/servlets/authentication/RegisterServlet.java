@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
@@ -35,14 +36,17 @@ public class RegisterServlet extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}
 	
+	//TODO: add "registration successful message!! 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// get request parameters for userID and password
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String plainPassword = request.getParameter("password");
 		String username = request.getParameter("username");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
+		
+		String password = BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));
 
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
@@ -57,8 +61,8 @@ public class RegisterServlet extends HttpServlet {
 			
 		} else {
 			Document doc = new Document("email", email).append("password", password)
-					.append("username", username).append(firstname, firstname).append(lastname, lastname);
-			MongoCollection<Document> collection = Util.collection(database, "users");
+					.append("username", username).append("firstname", firstname).append("lastname", lastname);
+			MongoCollection<Document> collection = database.getCollection("users");
 			
 			collection.insertOne(doc);
 			
@@ -72,6 +76,9 @@ public class RegisterServlet extends HttpServlet {
             HttpSession newSession = request.getSession(true);
             
             newSession.setAttribute("username", username);
+            newSession.setAttribute("firstname", firstname);
+            newSession.setAttribute("lastname", lastname);
+            newSession.setAttribute("email", email);
             
             //setting session to expire
             newSession.setMaxInactiveInterval(15*60);

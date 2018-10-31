@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.util.JsonBookParser;
+import com.bookexchange.util.PropertiesUtil;
 
 /**
  * Servlet implementation class SearchAPI
@@ -101,7 +102,7 @@ public class SearchAPI extends HttpServlet {
             conn = (HttpURLConnection)url.openConnection();  
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("key","AIzaSyCJqEl8gyfcPFsK5Lk2_o6Zvqcun5ERGcQ");
+            conn.setRequestProperty("key", PropertiesUtil.getValue("GoogleBooksAPIKey"));
             
             if (conn.getResponseCode() != 200) {
                 return ("{\"error\": \"Google Books API doesn't respond\"");
