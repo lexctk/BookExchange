@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bson.types.ObjectId;
-
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
@@ -64,17 +62,9 @@ public class Books extends HttpServlet {
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
-		User user = new User ();
-		
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            user.setEmail((String) session.getAttribute("email"));
-            user.setUsername((String) session.getAttribute("username"));
-            user.setFirstname((String) session.getAttribute("firstname"));
-            user.setLastname((String) session.getAttribute("lastname"));
-            user.set_id((ObjectId) session.getAttribute("_id"));
-        }		
-   
+		HttpSession session = request.getSession(false);
+		User user = Util.getCurrentUser(session, database);
+
 		Util.addBookToCollection(book, user, database);
 		response.setCharacterEncoding("UTF-8");
 		response.sendRedirect("profile");

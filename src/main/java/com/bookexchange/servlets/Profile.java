@@ -6,9 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.bookexchange.mongodb.model.User;
+import com.bookexchange.mongodb.util.MongoConnection;
+import com.bookexchange.mongodb.util.Util;
+import com.mongodb.client.MongoDatabase;
 
 /**
  * Servlet implementation class Profile
+ * 
+ * Handles user profile page
+ * 
  */
 @WebServlet("/app/profile")
 public class Profile extends HttpServlet {
@@ -28,6 +37,13 @@ public class Profile extends HttpServlet {
 		request.setAttribute("thumbnail", request.getContextPath() + "/resources/images/new_book.png");
 		request.setAttribute("title", "Add new");
 		request.setAttribute("link", request.getContextPath() + "/app/books/newsearch");
+		
+		HttpSession session = request.getSession(false);
+		MongoConnection mongo = MongoConnection.getInstance();
+		MongoDatabase database = mongo.database;
+		
+		User user = Util.getCurrentUser(session, database);
+		request.setAttribute("user", user);
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 	}
 

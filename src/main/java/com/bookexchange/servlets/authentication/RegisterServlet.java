@@ -1,6 +1,7 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +36,6 @@ public class RegisterServlet extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}
 	
-	//TODO: add "registration successful message!! 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// get request parameters for userID and password
@@ -54,18 +54,20 @@ public class RegisterServlet extends HttpServlet {
 
 		
 		if (isEmailFound) {
-			request.setAttribute("message", "Email already registered");
+			request.setAttribute("message", "Email already registered, please sign in instead");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
 			requestDispatcher.forward(request, response);			
 			
 		} else {
 			ObjectId _id = new ObjectId();
+			Date now = new Date();
+			
 			Document doc = new Document("_id", _id).append("email", email).append("password", password)
-					.append("username", username).append("firstname", firstname).append("lastname", lastname);
+					.append("username", username).append("firstname", firstname).append("lastname", lastname)
+					.append("registered", now);
 			MongoCollection<Document> collection = database.getCollection("users");
-			
 			collection.insertOne(doc);
-			
+
 			//get the old session and invalidate
             HttpSession oldSession = request.getSession(false);
             if (oldSession != null) {
@@ -76,9 +78,6 @@ public class RegisterServlet extends HttpServlet {
             HttpSession newSession = request.getSession(true);
             
             newSession.setAttribute("username", username);
-            newSession.setAttribute("firstname", firstname);
-            newSession.setAttribute("lastname", lastname);
-            newSession.setAttribute("email", email);
             newSession.setAttribute("_id", _id);
             
             //setting session to expire

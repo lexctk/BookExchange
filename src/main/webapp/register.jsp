@@ -17,25 +17,26 @@
             <div class="column my-5">
               <h2 class="ui center aligned header">BookExchange</h2>
               <hr>
-              <form class="form-signin" action="register" method="post">
-                <div class="form-group">
+              <form class="form-signin ui form" action="register" method="post">
+                <div class="field">
                   <input type=text name="username" class="form-control" id="username" placeholder="Username">
                 </div>
-                <div class="form-row">
-                	<div class="form-group col-md-6">
+                <div class="two fields">
+                	<div class="field">
                   		<input type=text name="firstname" class="form-control" id="firstname" placeholder="First Name">
                   	</div>
-                  	<div class="form-group col-md-6">
+                  	<div class="field">
                   		<input type=text name="lastname" class="form-control" id="lastname" placeholder="Last Name">
                 	</div>
                 </div>
-                <div class="form-group">
+                <div class="field">
                   <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email"> 
                 </div>
-                <div class="form-group">
+                <div class="field">
                   <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <div class="ui error message"></div>
               </form>
             </div>
             <div class="divider-column my-5"><div class="ui horizontal divider">
@@ -49,6 +50,5 @@
         </div>               
     </div>        
 </div>
-
 
 <%@ include file="partials/footer.jsp" %>

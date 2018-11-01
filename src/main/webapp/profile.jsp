@@ -13,10 +13,10 @@
 						<img src="../resources/images/user_turquoise.png">
 					</div>
 					<div class="content">
-						<a class="header">Username</a>
-						<div class="description">FirstName LastName</div>						
+						<a class="header">${user.getUsername()}</a>
+						<div class="description">${user.getFirstname()} ${user.getLastname()}</div>						
 						<div class="meta">
-							<span class="date">Joined in 2013</span>
+							<span class="date">Joined in ${user.getRegisteredMonth()} ${user.getRegisteredYear()}</span>
 						</div>
 					</div>
 					<div class="extra content">

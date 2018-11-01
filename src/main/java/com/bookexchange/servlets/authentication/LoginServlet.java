@@ -55,9 +55,6 @@ public class LoginServlet extends HttpServlet {
             //generate a new session
             HttpSession newSession = request.getSession(true);
             newSession.setAttribute("username", isUserFound.get("username"));
-            newSession.setAttribute("email", isUserFound.get("email"));
-            newSession.setAttribute("firstname", isUserFound.get("firstname"));
-            newSession.setAttribute("lastname", isUserFound.get("lastname"));
             newSession.setAttribute("_id", isUserFound.get("_id"));
             
             //setting session to expire
