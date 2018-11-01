@@ -3,12 +3,12 @@ package com.bookexchange.mongodb.model;
 public class VolumeInfo {
 	
 	private String title;
-	private String [] authors;
+	private String [] authors; //TODO: replace with List<String> (currently not an issue since presumably values won't change on this)
 	private String description;
-	private String [] categories;
+	private String [] categories; //TODO: replace with List<String> (currently not an issue since presumably values won't change on this)
 	private String language;
 	private ImageLinks imageLinks;
-	private IndustryIdentifiers [] industryIdentifiers;
+	private IndustryIdentifiers [] industryIdentifiers; //TODO: replace with List<String> (currently not an issue since presumably values won't change on this)
 	
 	public VolumeInfo () {
 	}

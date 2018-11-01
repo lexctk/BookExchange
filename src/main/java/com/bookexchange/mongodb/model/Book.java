@@ -1,5 +1,8 @@
 package com.bookexchange.mongodb.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,7 +15,8 @@ public class Book {
 
 	private String id;
 	private VolumeInfo volumeInfo;
-	
+	private List<String> userIDs;
+
 	public Book () {
 	}
 
@@ -20,7 +24,7 @@ public class Book {
 		return Objects.toString(id, "");
 	}
 
-	public void setIdAPI(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -31,13 +35,51 @@ public class Book {
 	public void setVolumeInfo(VolumeInfo volumeInfo) {
 		this.volumeInfo = volumeInfo;
 	}
+
+	public List<String> getUserIDs() {
+		return Collections.unmodifiableList(userIDs);
+	}
+
+	public void setUserIDs(List<String> userIDs) {
+		this.userIDs = new ArrayList<String>(userIDs);
+	}
 	
-	// Simplify rest of get methods:
+	/**
+	 * Adds a user id to the list of users. 
+	 * 
+	 * @param userID id to be added to the list
+	 * @return true if user was added, false if user already exists
+	 */
+	public boolean addUser (String userID) {
+		
+		if (this.userIDs == null) {
+			this.userIDs = new ArrayList<String>();
+		}
+		
+		if (this.userIDs.contains(userID)) {
+			return false;
+		}
+		
+		this.userIDs.add(userID);
+		return true;
+	}
 	
+	/**
+	 * Returns title of the book as string or empty string if title is null
+	 * 
+	 * @return title of the book as string
+	 */
 	public String getTitle () {
 		return Objects.toString(this.volumeInfo.getTitle(), "");
 	}
 	
+	/**
+	 * Returns authors of the book, as a string, separated by ", "
+	 * (used in forms for readability)
+	 * TODO: bad practice!! replace with form of multiple fields!
+	 * 
+	 * @return string with all authors of the book
+	 */
 	public String getAllAuthors () {
 		StringBuilder allAuthors = new StringBuilder();
 		
@@ -53,10 +95,22 @@ public class Book {
 		return allAuthors.toString();
 	}
 	
+	/**
+	 * Returns description of the book as string or empty string if description is null
+	 * 
+	 * @return description of the book as string
+	 */
 	public String getDescription() {
 		return Objects.toString(this.volumeInfo.getDescription(), "");
 	}
 	
+	/**
+	 * Returns categories of the book, as a string, separated by ", "
+	 * (used in forms for readability)
+	 * TODO: bad practice!! replace with form of multiple fields!
+	 * 
+	 * @return string with all categories of the book
+	 */	
 	public String getAllCategories () {
 		StringBuilder allCategories = new StringBuilder();
 		
@@ -72,10 +126,20 @@ public class Book {
 		return allCategories.toString();
 	}
 	
+	/**
+	 * Returns language of the book as string or empty string if language is null
+	 * 
+	 * @return language of the book as string
+	 */	
 	public String getLanguage () {
 		return Objects.toString(this.volumeInfo.getLanguage(), "");
 	}
-	
+
+	/**
+	 * Returns thumbnail of the book as string or empty string if thumbnail is null
+	 * 
+	 * @return thumbnail of the book as string
+	 */
 	public String getThumbnail () {
 		ImageLinks imageLinks = this.volumeInfo.getImageLinks();
 		if (imageLinks != null) {
@@ -83,7 +147,15 @@ public class Book {
 		}
 		return "";
 	}
-	
+
+	/**
+	 * Returns identifiers of the book, as a string, separated by ", "
+	 * under the format <IDENTIFIER_TYPE>:<IDENTIFIER>
+	 * (used in forms for readability)
+	 * TODO: bad practice!! replace with form of multiple fields!
+	 * 
+	 * @return string with all identifiers of the book
+	 */	
 	public String getAllIndustryIdentifiers () {
 		StringBuilder allIndustryIdentifiers = new StringBuilder();
 		
@@ -100,5 +172,4 @@ public class Book {
 		}
 		return allIndustryIdentifiers.toString();		
 	}
-	
 }

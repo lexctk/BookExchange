@@ -92,7 +92,6 @@ nav {
 }
 
 .navbar {
-	padding: 2em 0;
 	transition: all 0.3s ease-out;
 	box-shadow: 0px 4px 8px 1px rgba(46, 46, 46, 0.79);
 }
@@ -239,7 +238,7 @@ p.hero-item {
 }
 
 .spacer-navbar { /* prevent the navbar from overlapping element */
-	padding-top: 128px!important;
+	padding-top: 72px!important;
 }
 
 @media ( min-width : 767.98px) { /* TODO: delete if unused? */

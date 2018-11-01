@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.bson.types.ObjectId;
+
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
@@ -30,14 +32,13 @@ public class Books extends HttpServlet {
      */
     public Books() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		// TODO Return lists
 		
 		request.getRequestDispatcher("/books.jsp").forward(request, response);
 	}
@@ -71,10 +72,11 @@ public class Books extends HttpServlet {
             user.setUsername((String) session.getAttribute("username"));
             user.setFirstname((String) session.getAttribute("firstname"));
             user.setLastname((String) session.getAttribute("lastname"));
+            user.set_id((ObjectId) session.getAttribute("_id"));
         }		
    
-		Util.addBooktoCollection(book, user, database);
-		
-		response.sendRedirect("app/profile");
+		Util.addBookToCollection(book, user, database);
+		response.setCharacterEncoding("UTF-8");
+		response.sendRedirect("profile");
 	}
 }

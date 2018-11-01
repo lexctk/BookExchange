@@ -4,7 +4,7 @@
 
 <%@ include file="../partials/navbar.jsp" %>
 <%
-// TODO:
+// TODO: towards end of project
 // Used for debugging
 // Skip this form completely if found book via API, extra step is pointless! 
 // Needs input for book trade type/location

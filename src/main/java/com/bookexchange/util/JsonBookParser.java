@@ -74,7 +74,7 @@ public class JsonBookParser {
 		VolumeInfo volumeInfo = new VolumeInfo ();
 		ImageLinks imageLinks = new ImageLinks ();
 		
-		book.setIdAPI(id);
+		book.setId(id);
 		
 		volumeInfo.setTitle(title);
 		String[] authorsParse = authors.split(",\\s*");

@@ -31,8 +31,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login.jsp");
-		requestDispatcher.forward(request, response);
-		
+		requestDispatcher.forward(request, response);	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +44,6 @@ public class LoginServlet extends HttpServlet {
 		MongoDatabase database = mongo.database;
 	
 		Document isUserFound = Util.authenticateUser(email.toLowerCase(), password, database);
-
 		
 		if (isUserFound != null) {
 			
@@ -56,10 +54,11 @@ public class LoginServlet extends HttpServlet {
             }
             //generate a new session
             HttpSession newSession = request.getSession(true);
-            newSession.setAttribute("username", (String) isUserFound.get("username"));
-            newSession.setAttribute("email", (String) isUserFound.get("email"));
-            newSession.setAttribute("firstname", (String) isUserFound.get("firstname"));
-            newSession.setAttribute("lastname", (String) isUserFound.get("lastname"));
+            newSession.setAttribute("username", isUserFound.get("username"));
+            newSession.setAttribute("email", isUserFound.get("email"));
+            newSession.setAttribute("firstname", isUserFound.get("firstname"));
+            newSession.setAttribute("lastname", isUserFound.get("lastname"));
+            newSession.setAttribute("_id", isUserFound.get("_id"));
             
             //setting session to expire
             newSession.setMaxInactiveInterval(15*60);

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.util.MongoConnection;
@@ -30,8 +31,6 @@ public class RegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/register.jsp");
 		requestDispatcher.forward(request, response);
 	}
@@ -60,7 +59,8 @@ public class RegisterServlet extends HttpServlet {
 			requestDispatcher.forward(request, response);			
 			
 		} else {
-			Document doc = new Document("email", email).append("password", password)
+			ObjectId _id = new ObjectId();
+			Document doc = new Document("_id", _id).append("email", email).append("password", password)
 					.append("username", username).append("firstname", firstname).append("lastname", lastname);
 			MongoCollection<Document> collection = database.getCollection("users");
 			
@@ -79,6 +79,7 @@ public class RegisterServlet extends HttpServlet {
             newSession.setAttribute("firstname", firstname);
             newSession.setAttribute("lastname", lastname);
             newSession.setAttribute("email", email);
+            newSession.setAttribute("_id", _id);
             
             //setting session to expire
             newSession.setMaxInactiveInterval(15*60);

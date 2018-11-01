@@ -1,5 +1,9 @@
 package com.bookexchange.mongodb.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
 public class User {
@@ -11,16 +15,9 @@ public class User {
 	private String lastname;
 	private String email;
 	private String password;
-	private boolean isAdmin;
+	private List<String> bookIDs;
 
 	public User() {
-	}
-	
-	public ObjectId getId() {
-		return _id;
-	}
-	public void setId(ObjectId _id) {
-		this._id = _id;
 	}
 
 	public String getUsername() {
@@ -63,12 +60,39 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
+	public ObjectId get_id() {
+		return _id;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public void set_id(ObjectId _id) {
+		this._id = _id;
+	}
+	
+	public List<String> getBookIDs() {
+		return Collections.unmodifiableList(bookIDs);
 	}
 
+	public void setBookIDs(List<String> bookIDs) {
+		this.bookIDs = new ArrayList<String>(bookIDs);
+	}
+	
+	/**
+	 * Adds a book id to the list of books. 
+	 * 
+	 * @param bookID id to be added to the list
+	 * @return true if book was added, false if book already exists
+	 */
+	public boolean addBook (String bookID) {
+		
+		if (this.bookIDs == null) {
+			this.bookIDs = new ArrayList<String>();
+		}
+
+		if (this.bookIDs.contains(bookID)) {
+			System.out.println("contains");
+			return false;
+		}
+		this.bookIDs.add(bookID);
+		return true;
+	}
 }

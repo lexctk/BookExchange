@@ -19,14 +19,12 @@ public class Profile extends HttpServlet {
      */
     public Profile() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setAttribute("thumbnail", request.getContextPath() + "/resources/images/new_book.png");
 		request.setAttribute("title", "Add new");
 		request.setAttribute("link", request.getContextPath() + "/app/books/newsearch");
@@ -37,7 +35,6 @@ public class Profile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
