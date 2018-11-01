@@ -6,7 +6,7 @@
 
 <section id='selection' class='fullscreen spacer-navbar'>
 	<div class="container" >
-		<div class="hint spacer d-flex justify-content-between">
+		<div class="hint spacer d-flex justify-content-between flex-sm-row flex-column">
 			<div class="p-2"><h2>Step 1: Search for your book </h2></div>
 			<div class="p-2"><a class="btn btn-light btn-lg btn-skip" role="button" href="${pageContext.request.contextPath}/app/books/new">Skip <i class="fas fa-chevron-right"></i></a></div>
 		</div>

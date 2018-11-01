@@ -34,10 +34,6 @@ public class Profile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("thumbnail", request.getContextPath() + "/resources/images/new_book.png");
-		request.setAttribute("title", "Add new");
-		request.setAttribute("link", request.getContextPath() + "/app/books/newsearch");
-		
 		HttpSession session = request.getSession(false);
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;

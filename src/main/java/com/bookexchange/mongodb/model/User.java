@@ -1,9 +1,9 @@
 package com.bookexchange.mongodb.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,7 +19,7 @@ public class User {
 	private String email;
 	private String password;
 	private List<String> bookIDs;
-	private Date registered;
+	private String registered;
 
 	public User() {
 	}
@@ -73,6 +73,7 @@ public class User {
 	}
 	
 	public List<String> getBookIDs() {
+		if (bookIDs == null) return null;
 		return Collections.unmodifiableList(bookIDs);
 	}
 
@@ -80,11 +81,11 @@ public class User {
 		this.bookIDs = new ArrayList<String>(bookIDs);
 	}
 	
-	public Date getRegistered() {
+	public String getRegistered() {
 		return registered;
 	}
 
-	public void setRegistered(Date registered) {
+	public void setRegistered(String registered) {
 		this.registered = registered;
 	}	
 	
@@ -109,16 +110,14 @@ public class User {
 	}
 	
 	public String getRegisteredMonth() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(this.registered);
-		String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
-		return month;
+		LocalDate dateTime = LocalDate.parse(this.registered, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("MMMM").withLocale(Locale.ENGLISH);
+		return dateTime.format(df_en);
 	}
 	
 	public String getRegisteredYear() {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(this.registered);
-		String year = String.valueOf(cal.get(Calendar.YEAR));
-		return year;
+		LocalDate dateTime = LocalDate.parse(this.registered, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("yyyy").withLocale(Locale.ENGLISH);
+		return dateTime.format(df_en);		
 	}
 }

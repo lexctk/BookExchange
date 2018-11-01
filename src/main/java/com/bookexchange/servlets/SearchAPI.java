@@ -65,6 +65,7 @@ public class SearchAPI extends HttpServlet {
 			buildHTML.append(mockHttpServletResponse.getOutput());
 		}
 		
+		// store json in session to retrieve in /app/books/new
 		HttpSession httpSession = request.getSession();
 		httpSession.setAttribute("books", json);
 		

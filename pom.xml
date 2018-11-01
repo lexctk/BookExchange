@@ -41,7 +41,7 @@
 		    <groupId>org.mindrot</groupId>
 		    <artifactId>jbcrypt</artifactId>
 		    <version>0.4</version>
-		</dependency>				
+		</dependency>					
 	</dependencies>
 	<build>
 		<pluginManagement>
@@ -53,6 +53,11 @@
 					<configuration>
 						<release>10</release>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.2</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>

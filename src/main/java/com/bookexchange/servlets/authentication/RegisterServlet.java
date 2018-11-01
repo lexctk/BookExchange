@@ -1,7 +1,8 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -60,11 +61,11 @@ public class RegisterServlet extends HttpServlet {
 			
 		} else {
 			ObjectId _id = new ObjectId();
-			Date now = new Date();
+			LocalDateTime now = LocalDateTime.now();
 			
 			Document doc = new Document("_id", _id).append("email", email).append("password", password)
 					.append("username", username).append("firstname", firstname).append("lastname", lastname)
-					.append("registered", now);
+					.append("registered", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
 			MongoCollection<Document> collection = database.getCollection("users");
 			collection.insertOne(doc);
 

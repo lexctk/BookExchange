@@ -80,3 +80,25 @@ $(function() {
 		});
 	});
 });
+
+let acknowledge = true;
+
+// show user books
+if ($('#user-books').length) {
+	if (!$.trim($('#user-books').html()) && acknowledge) {
+		$.ajax({
+			url: 'booklist',
+			type: 'GET',
+			success: function(response) {
+				acknowledge = false;
+				processUserBooks(response);
+				
+			}
+		})
+	}
+}
+
+function processUserBooks (response) {
+	$('#user-books').html(response);
+}
+

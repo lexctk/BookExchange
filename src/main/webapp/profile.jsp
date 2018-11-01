@@ -29,23 +29,7 @@
 			</div>
 			<div class="col-12 col-md-8 col-lg-9 spacer" id="viewport">
 				<h2>My Books</h2>
-				<div class="row">
-					<%@ include file="books/book.jsp" %>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
+				<div class="row user-books" id="user-books">
 				</div>		
 			</div>
 		</div>

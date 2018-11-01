@@ -66,7 +66,6 @@ public class Books extends HttpServlet {
 		User user = Util.getCurrentUser(session, database);
 
 		Util.addBookToCollection(book, user, database);
-		response.setCharacterEncoding("UTF-8");
 		response.sendRedirect("profile");
 	}
 }

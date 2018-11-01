@@ -2,9 +2,6 @@ package com.bookexchange.mongodb.util;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.mongodb.client.model.Filters.and;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +13,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.User;
 import com.google.gson.Gson;
-import com.mongodb.BasicDBList;
+import com.google.gson.GsonBuilder;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -55,32 +52,21 @@ public class Util {
 	public static User getCurrentUser (HttpSession session, MongoDatabase database) {
 		User user = null;
 		
-        if (session != null) {
-        	user = new User ();
-            user.setUsername((String) session.getAttribute("username"));
-            user.set_id((ObjectId) session.getAttribute("_id"));
+        if (session == null) {
+        	return user;
         }
         MongoCollection<Document> collection = database.getCollection("users");
         
-        Document userDoc = collection.find(and(
-        		eq("username", user.getUsername()), 
-        		eq("_id", user.get_id())
-        		)).first();
-		user.setFirstname(userDoc.getString("firstname"));
-		user.setLastname(userDoc.getString("lastname"));
-		user.setEmail(userDoc.getString("email"));
+        String userJson = collection.find(and(
+        		eq("username", (String) session.getAttribute("username")), 
+        		eq("_id", (ObjectId) session.getAttribute("_id"))
+        		)).first().toJson();
+        Gson gson = new GsonBuilder().create();
+		user = gson.fromJson(userJson, User.class);
 		
-		List<String> userBooks = new ArrayList<String>();
-		
-		BasicDBList list = (BasicDBList) userDoc.get("bookIDs");
-		if (list != null && !list.isEmpty()) {
-			for(Object el: list) {
-				userBooks.add((String) el);
-			}
-		}
-		user.setBookIDs(userBooks);
-		user.setRegistered(userDoc.getDate("registered"));
-		
+		// for some reason gson doesn't parse _id
+		user.set_id((ObjectId) session.getAttribute("_id"));
+
         return user;
 	}
 	
