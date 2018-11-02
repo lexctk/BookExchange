@@ -81,6 +81,7 @@ public class BookList extends HttpServlet {
 
 		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
 		request.setAttribute("books", books);
+		request.setAttribute("linkBase", "/app/books/");
 		request.setAttribute("link", urlType);
 		request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
 		buildHTML.append(mockHttpServletResponse.getOutput());

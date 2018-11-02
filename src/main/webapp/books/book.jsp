@@ -3,7 +3,7 @@
 
 <c:forEach var="book" items="${books}">
 	<div class="col-6 col-md-4 col-lg-3 col-xl-2 spacer">
-		<a href="${pageContext.request.contextPath}/app/books/<c:out value='${book.getId()}'/>/${link}">
+		<a href="${pageContext.request.contextPath}${linkBase}<c:out value='${book.getId()}'/>${link}">
 		<div class="ui card"> 
 			<div class="image">
 				<c:set var="thumbnail"><c:out value='${book.getThumbnail()}'/></c:set>

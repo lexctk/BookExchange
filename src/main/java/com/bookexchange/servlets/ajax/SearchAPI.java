@@ -53,17 +53,12 @@ public class SearchAPI extends HttpServlet {
 		StringBuilder buildHTML = new StringBuilder();
 		buildHTML.append("<div class='row'>");
 		
-		for (int i = 0; i < books.size(); i++) {
-			Book oneBook = books.get(i);
-			MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
-			request.setAttribute("title", oneBook.getTitle());
-			request.setAttribute("authors", oneBook.getAllAuthors());
-			request.setAttribute("thumbnail", oneBook.getThumbnail());
-			request.setAttribute("link", request.getContextPath() + "/app/books/new?id=" + oneBook.getId());
-			request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
-			
-			buildHTML.append(mockHttpServletResponse.getOutput());
-		}
+		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
+		request.setAttribute("books", books);
+		request.setAttribute("linkBase", "/app/books/new?id=");
+		request.setAttribute("link", "");
+		request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
+		buildHTML.append(mockHttpServletResponse.getOutput());
 		
 		// store json in session to retrieve in /app/books/new
 		HttpSession httpSession = request.getSession();
