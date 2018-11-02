@@ -109,6 +109,12 @@ public class User {
 		return true;
 	}
 	
+	
+	/**
+	 * Get registration month from date
+	 * 
+	 * @return month as string, in English (January, February...)
+	 */
 	public String getRegisteredMonth() {
 		LocalDate dateTime = LocalDate.parse(this.registered, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("MMMM").withLocale(Locale.ENGLISH);

@@ -84,11 +84,13 @@ $(function() {
 let acknowledge = true;
 
 // show user books
-if ($('#user-books').length) {
-	if (!$.trim($('#user-books').html()) && acknowledge) {
+if ($('#book-list').length) {
+	if (!$.trim($('#book-list').html()) && acknowledge) {
+		let classes = $('#book-list').attr('class');
 		$.ajax({
 			url: 'booklist',
 			type: 'GET',
+			data:{'classes':classes},
 			success: function(response) {
 				acknowledge = false;
 				processUserBooks(response);
@@ -99,6 +101,6 @@ if ($('#user-books').length) {
 }
 
 function processUserBooks (response) {
-	$('#user-books').html(response);
+	$('#book-list').html(response);
 }
 

@@ -20,6 +20,14 @@ import com.mongodb.client.MongoDatabase;
 
 public class Util {
 
+	/**
+	 * Search user in database by email, and if password matches database value, return user as Document
+	 * 
+	 * @param email
+	 * @param password (hash)
+	 * @param database
+	 * @return user, or null if no match.
+	 */
 	public static Document authenticateUser (String email, String password, MongoDatabase database) {
 		Document userFound = null;
 		
@@ -36,6 +44,12 @@ public class Util {
 		return userFound;
 	}
 	
+	/**
+	 * Check if email exists in database (user already registered)
+	 * @param email
+	 * @param database
+	 * @return true if email exists, false if not
+	 */
 	public static boolean searchEmail (String email, MongoDatabase database) {
 		boolean emailFound = false;
 		
@@ -49,6 +63,13 @@ public class Util {
 		return emailFound;
 	}
 	
+	/**
+	 * Get current logged in user from session information. 
+	 * 
+	 * @param session
+	 * @param database
+	 * @return user object
+	 */
 	public static User getCurrentUser (HttpSession session, MongoDatabase database) {
 		User user = null;
 		
