@@ -7,10 +7,17 @@
 	border-radius: 30px;
 }
 
-.btn-skip {
+.btn-icon {
+	padding-top: 10px;
 	border: 1px solid #212529;
 	height: 50px;
 	width: 200px;
+}
+
+.btn-noicon {
+	border: 1px solid #212529;
+	height: 50px;
+	width: 200px;	
 }
 
 .btn-login {

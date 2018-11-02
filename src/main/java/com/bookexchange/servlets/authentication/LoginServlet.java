@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
             Cookie cookie = new Cookie("username", (String) isUserFound.get("username"));
             response.addCookie(cookie);
             
-			response.sendRedirect("app/books");
+			response.sendRedirect("app/dashboard");
 			
 		} else {
 			

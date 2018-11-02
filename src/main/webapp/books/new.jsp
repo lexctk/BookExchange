@@ -63,7 +63,7 @@
 					</div>
 					<input name="thumbnail" id="thumbnail" class="hidden" type="url" value="${thumbnail}">
 					<input name="id" id="id" class="hidden" type="text" value="${id}">
-					<button class="btn btn-light btn-lg btn-skip" type="submit">Add</button>
+					<button class="btn btn-light btn-lg btn-noicon" type="submit">Add</button>
 				</form>
 			</div>
 		</div>

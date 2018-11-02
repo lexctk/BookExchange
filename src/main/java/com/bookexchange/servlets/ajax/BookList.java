@@ -76,15 +76,7 @@ public class BookList extends HttpServlet {
 			
 			buildHTML.append(mockHttpServletResponse.getOutput());
 		}
-		
-		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
-		request.setAttribute("thumbnail", request.getContextPath() + "/resources/images/new_book.png");
-		request.setAttribute("title", "Add new");
-		request.setAttribute("authors", "");
-		request.setAttribute("link", request.getContextPath() + "/app/books/newsearch");
-		request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
-		buildHTML.append(mockHttpServletResponse.getOutput());
-		
+
 		response.getWriter().write(buildHTML.toString());
 	}
 

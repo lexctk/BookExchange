@@ -87,7 +87,7 @@ public class RegisterServlet extends HttpServlet {
             Cookie cookie = new Cookie("username", username);
             response.addCookie(cookie);	
             
-            response.sendRedirect("app/books");
+            response.sendRedirect("app/dashboard");
 		}
 
 	}

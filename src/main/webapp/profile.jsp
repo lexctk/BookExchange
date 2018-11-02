@@ -28,7 +28,10 @@
 				</div>				
 			</div>
 			<div class="col-12 col-md-8 col-lg-9 spacer" id="viewport">
-				<h2>My Books</h2>
+				<div class="hint spacer d-flex align-items-center justify-content-between flex-sm-row flex-column">
+					<div class="p-2"><h2>My Books</h2></div>
+					<div class="p-2"><a class="btn btn-light btn-lg btn-icon" role="button" href="${pageContext.request.contextPath}/app/books/newsearch">Add Book <i class="fas fa-plus"></i></a></div>
+				</div>
 				<div class="row user-books" id="user-books">
 				</div>		
 			</div>

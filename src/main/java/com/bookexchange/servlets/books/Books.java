@@ -1,4 +1,4 @@
-package com.bookexchange.servlets;
+package com.bookexchange.servlets.books;
 
 import java.io.IOException;
 
