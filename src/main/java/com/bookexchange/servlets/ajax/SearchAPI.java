@@ -1,4 +1,4 @@
-package com.bookexchange.servlets;
+package com.bookexchange.servlets.ajax;
 
 import java.io.BufferedReader;
 import java.io.IOException;

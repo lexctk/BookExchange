@@ -1,4 +1,4 @@
-package com.bookexchange.servlets;
+package com.bookexchange.servlets.ajax;
 
 import static com.mongodb.client.model.Filters.eq;
 
