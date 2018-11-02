@@ -3,6 +3,7 @@ package com.bookexchange.mongodb.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -172,4 +173,9 @@ public class Book {
 		}
 		return allIndustryIdentifiers.toString();		
 	}
+	
+	public String getLanguageName () {
+		Locale locale = new Locale (Objects.toString(this.volumeInfo.getLanguage(), ""));
+		return locale.getDisplayLanguage();
+	}	
 }

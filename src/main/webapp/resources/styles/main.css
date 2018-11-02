@@ -87,7 +87,7 @@ header {
 	width: 100%;
 	opacity: 0;
 	animation: 1s fadein .4s forwards;
-	z-index: 1;
+	z-index: 10;
 }
 
 nav {
@@ -246,6 +246,10 @@ p.hero-item {
 
 .spacer-navbar { /* prevent the navbar from overlapping element */
 	padding-top: 72px!important;
+}
+
+.spacer-footer { /* prevent the navbar from overlapping element */
+	padding-bottom: 30px!important;
 }
 
 @media ( min-width : 767.98px) { /* TODO: delete if unused? */

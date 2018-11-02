@@ -103,4 +103,3 @@ if ($('#book-list').length) {
 function processUserBooks (response) {
 	$('#book-list').html(response);
 }
-

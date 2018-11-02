@@ -46,7 +46,11 @@ public class BookList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StringBuilder buildHTML = new StringBuilder();
+		StringBuilder wrapperHTML = new StringBuilder();
+		
 		String listType = "";
+		String urlType = "";
+		boolean filter = false;
 		
 		// get ajax query parameter
 		String classes = request.getParameter("classes");
@@ -54,6 +58,7 @@ public class BookList extends HttpServlet {
 			List<String> options = new ArrayList<String>(Arrays.asList(classes.split(" ")));
 			if (options.contains("list-user")) listType = "user";
 			if (options.contains("list-all")) listType = "all";
+			if (options.contains("list-filter")) filter = true;
 		}
 		
 		// build book list based on query
@@ -66,25 +71,44 @@ public class BookList extends HttpServlet {
 		switch (listType) {
 			case "user":  
 				books = buildUserBooks(session, database);
+				urlType = "/edit";
 				break;
 			case "all":
 				books = buildAllBooks(session, database);
+				urlType = "";
 				break;
 		}
-		
-		for (int i = 0; i < books.size(); i++) {
-			Book oneBook = books.get(i);
-			MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
-			request.setAttribute("title", oneBook.getTitle());
-			request.setAttribute("authors", oneBook.getAllAuthors());
-			request.setAttribute("thumbnail", oneBook.getThumbnail());
-			request.setAttribute("link", request.getContextPath() + "/app/books/" + oneBook.getId() + "/edit");
-			request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
-			
-			buildHTML.append(mockHttpServletResponse.getOutput());
-		}
 
-		response.getWriter().write(buildHTML.toString());
+		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
+		request.setAttribute("books", books);
+		request.setAttribute("link", urlType);
+		request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
+		buildHTML.append(mockHttpServletResponse.getOutput());
+		
+		if (filter) {
+			ArrayList<String> categories = new ArrayList<String>();
+			ArrayList<String> languages = new ArrayList<String>();
+			
+			for (int i = 0; i < books.size(); i++) {
+				String[] categoryList = books.get(i).getVolumeInfo().getCategories();
+				for (int j = 0; j< categoryList.length; j++) {
+					if (!categories.contains(categoryList[j])) categories.add(categoryList[j]);
+				}
+				String language = books.get(i).getLanguageName();
+				if (!languages.contains(language)) languages.add(language);
+			}
+			
+			mockHttpServletResponse = new MockHttpServletResponse (response);
+			request.setAttribute("categories", categories);
+			request.setAttribute("languages", languages);
+			request.setAttribute("booklist", buildHTML.toString());
+			request.getRequestDispatcher("/books/filters.jsp").forward(request, mockHttpServletResponse);
+			wrapperHTML.append(mockHttpServletResponse.getOutput());
+		} else {
+			wrapperHTML.append(buildHTML.toString());
+		}
+				
+		response.getWriter().write(wrapperHTML.toString());
 	}
 
 	/**
@@ -133,5 +157,5 @@ public class BookList extends HttpServlet {
 		}
 
 		return books;
-	}	
+	}
 }

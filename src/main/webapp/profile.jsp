@@ -4,7 +4,7 @@
 
 <%@ include file="partials/navbar.jsp" %>
 
-<section class='fullscreen spacer-navbar'>
+<section class='fullscreen spacer-navbar spacer-footer'>
 	<div class="container-fluid" >
 		<div class="row">
 			<div class="col-12 col-md-4 col-lg-3 spacer">
@@ -32,7 +32,7 @@
 					<div class="p-2"><h2>My Books</h2></div>
 					<div class="p-2"><a class="btn btn-light btn-lg btn-icon" role="button" href="${pageContext.request.contextPath}/app/books/newsearch">Add Book <i class="fas fa-plus"></i></a></div>
 				</div>
-				<div class="row book-list list-user" id="book-list">
+				<div class="row list-user" id="book-list">
 				</div>		
 			</div>
 		</div>

@@ -38,7 +38,7 @@ public class Books extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Return lists
 		
-		request.getRequestDispatcher("/books.jsp").forward(request, response);
+		request.getRequestDispatcher("/books/books.jsp").forward(request, response);
 	}
 
 	/**
