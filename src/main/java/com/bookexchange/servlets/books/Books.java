@@ -1,6 +1,7 @@
 package com.bookexchange.servlets.books;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,6 @@ import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
 import com.bookexchange.util.JsonBookParser;
-
 import com.mongodb.client.MongoDatabase;
 
 
@@ -36,9 +36,25 @@ public class Books extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Return lists
-		
-		request.getRequestDispatcher("/books/books.jsp").forward(request, response);
+		String id = request.getParameter("id");
+		if (id == null || id.length() <= 0) {
+			//no id, show all books
+			request.getRequestDispatcher("/books/books.jsp").forward(request, response);
+		} else {
+			//has id, show one book and users offering it
+			MongoConnection mongo = MongoConnection.getInstance();
+			MongoDatabase database = mongo.database;
+			Book book = Util.getOneBook (id, database);
+			request.setAttribute("id", id);
+			request.setAttribute("book", book);
+			System.out.println(book.getUserIDs().toString());
+			if (book.getUserIDs() != null && book.getUserIDs().size() > 0) {
+				ArrayList<User> users = new ArrayList<User>();
+				users = Util.buildBookUsers(book.getUserIDs(), database);
+				request.setAttribute("users", users);
+			}
+			request.getRequestDispatcher("/books/book-single.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -67,5 +83,5 @@ public class Books extends HttpServlet {
 
 		Util.addBookToCollection(book, user, database);
 		response.sendRedirect("profile");
-	}
+	}	
 }

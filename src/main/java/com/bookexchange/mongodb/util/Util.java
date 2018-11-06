@@ -2,6 +2,9 @@ package com.bookexchange.mongodb.util;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.mongodb.client.model.Filters.and;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +17,7 @@ import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -90,6 +94,18 @@ public class Util {
 
         return user;
 	}
+
+	public static Book getOneBook (String id, MongoDatabase database) {
+		MongoCollection<Document> collection = database.getCollection("books");
+		
+		Document bookDoc = collection.find(eq("id", id)).first();
+	
+		String json = bookDoc.toJson();
+		Gson gson = new GsonBuilder().create();
+		Book book = gson.fromJson(json, Book.class);
+
+		return book;
+	}
 	
 	public static boolean addBookToCollection (Book book, User user, MongoDatabase database) {
 		boolean bookAdded = false;
@@ -134,5 +150,62 @@ public class Util {
         	bookAdded = true;
         }
         return bookAdded;
+	}
+	
+	public static ArrayList<Book> buildUserBooks(HttpSession session, MongoDatabase database) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		MongoCollection<Document> collection = database.getCollection("books");
+		
+		User user = Util.getCurrentUser(session, database);
+		if (user.getBookIDs() != null) {
+			for(String bookID : user.getBookIDs()) {
+				FindIterable<Document> it = collection.find(eq("id", bookID));
+				for(Document doc : it) {
+					String json = doc.toJson();
+					Gson gson = new GsonBuilder().create();
+		    		Book book = gson.fromJson(json, Book.class);
+		    		books.add(book);
+				}
+			}
+		}
+		return books;
+	}
+
+	public static ArrayList<Book> buildAllBooks(HttpSession session, MongoDatabase database) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		MongoCollection<Document> collection = database.getCollection("books");
+		
+		BasicDBObject query = new BasicDBObject();
+		
+		User user = Util.getCurrentUser(session, database);
+		if (user.getBookIDs() != null) {
+			query.put("id", new BasicDBObject("$nin", user.getBookIDs()));
+		}
+		
+		FindIterable<Document> it = collection.find(query);
+		for(Document doc : it) {
+			String json = doc.toJson();
+			Gson gson = new GsonBuilder().create();
+    		Book book = gson.fromJson(json, Book.class);
+    		books.add(book);
+		}
+
+		return books;
+	}	
+	
+	public static ArrayList<User> buildBookUsers(List<String> userIDs, MongoDatabase database) {
+		ArrayList<User> users = new ArrayList<User>();
+		MongoCollection<Document> collection = database.getCollection("users");
+		
+		for(String userID : userIDs) {
+			FindIterable<Document> it = collection.find(eq("_id", userID));
+			for(Document doc : it) {
+				String json = doc.toJson();
+				Gson gson = new GsonBuilder().create();
+	    		User user = gson.fromJson(json, User.class);
+	    		users.add(user);
+			}
+		}
+		return users;
 	}
 }

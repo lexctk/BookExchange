@@ -2,53 +2,54 @@
 
 <%@ include file="partials/header.jsp" %>
 
-<div class="row h-md-100">
-    <div class="col-sm-12 col-md-6 book-background">
-        <div class="ui right aligned basic segment m-lg-5">
-            <div class="column my-5">
-                <h2 class="ui right aligned header"><i class="fas fa-search"></i> Search for books</h2>
-                <h2 class="ui right aligned header"><i class="fas fa-users"></i> Exchange</h2>
-                <h2 class="ui right aligned header"><i class="fas fa-book-reader"></i> Find events near you</h2>
-            </div>
-        </div>        
-    </div>
-    <div class="col-sm-12 col-md-6">
-          <div class="ui center aligned basic segment m-lg-5">
-            <div class="column my-5">
-              <h2 class="ui center aligned header">BookExchange</h2>
-              <hr>
-              <form class="form-signin ui form" action="register" method="post">
-                <div class="field">
-                  <input type=text name="username" class="form-control" id="username" placeholder="Username">
-                </div>
-                <div class="two fields">
-                	<div class="field">
-                  		<input type=text name="firstname" class="form-control" id="firstname" placeholder="First Name">
-                  	</div>
-                  	<div class="field">
-                  		<input type=text name="lastname" class="form-control" id="lastname" placeholder="Last Name">
-                	</div>
-                </div>
-                <div class="field">
-                  <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email"> 
-                </div>
-                <div class="field">
-                  <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
-                <div class="ui error message"></div>
-              </form>
-            </div>
-            <div class="divider-column my-5"><div class="ui horizontal divider">
-                Or
-            </div></div>   
-            <div class="column my-5">
-              <button class="btn btn-block btn-login btn-google">Register with Google</button>
-              <button class="btn btn-block btn-login btn-twitter">Register with Twitter</button>
-              <button class="btn btn-block btn-login btn-facebook">Register with Facebook</button>
-            </div>
-        </div>               
-    </div>        
+<div class="row no-gutters fullscreen">
+	<div class="col-12 col-md-6 fullscreen-mobile d-flex flex-column justify-content-center dark-background">
+		<div class="d-flex flex-column p-3 p-lg-5 white">
+			<a class="white" href="${pageContext.request.contextPath}/login"><i class="fas fa-long-arrow-alt-left"></i> Back to login</a>
+			<div class="d-flex flex-row justify-content-center align-items-center">
+				<img class='logo' src="${pageContext.request.contextPath}/resources/images/logo-mini.png" alt="Book Exchange Logo"></img>
+				<div><h2><strong>BOOK</strong> Exchange</h2></div>
+			</div>
+			<form class="form-signin ui form spacer" action="register" method="post">
+				<div class="field">
+					<input type=text name="username" class="form-control" id="username" placeholder="Username">
+				</div>
+				<div class="two fields">
+					<div class="field">
+						<input type=text name="firstname" class="form-control" id="firstname" placeholder="First Name">
+					</div>
+					<div class="field">
+						<input type=text name="lastname" class="form-control" id="lastname" placeholder="Last Name">
+					</div>
+				</div>
+				<div class="field">
+					<input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email"> 
+				</div>
+				<div class="field">
+					<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+				</div>
+				<button type="submit" class="btn btn-primary btn-gradient btn-block">Register</button>
+				<div class="ui error message"></div>
+			</form>
+			<div class="ui horizontal divider white">Or</div>
+			<button class="btn btn-block btn-login btn-google">Register with Google</button>
+			<button class="btn btn-block btn-login btn-twitter">Register with Twitter</button>
+			<button class="btn btn-block btn-login btn-facebook">Register with Facebook</button>
+		</div>
+	</div>
+	<div class="col-12 col-md-6  book-background fullscreen-mobile d-flex flex-column justify-content-center">
+		<div class="d-flex flex-column align-items-center p-3 p-lg-5">
+			<h1 class='hero-item'>
+				<i class="fas fa-search"></i> Search for books
+			</h1>
+			<h1 class='hero-item'>
+				<i class="fas fa-users"></i> Exchange
+			</h1>
+			<h1 class='hero-item'>
+				<i class="fas fa-book-reader"></i> Find events near you
+			</h1>
+		</div>
+	</div>
 </div>
 
 <%@ include file="partials/footer.jsp" %>

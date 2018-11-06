@@ -4,7 +4,7 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-toggle="affix"><div class="container-fluid">
 		<a class="navbar-brand" href="${pageContext.request.contextPath}/app/dashboard">
-			<img class='logo' src="${pageContext.request.contextPath}/resources/images/logo-mini.png" alt="logo"></img>
+			<img class='logo' src="${pageContext.request.contextPath}/resources/images/logo-mini.png" alt="Book Exchange Logo"></img>
 			<strong>BOOK</strong> Exchange
 		</a>
 		

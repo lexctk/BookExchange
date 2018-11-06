@@ -1,35 +1,30 @@
 // Fix to top with data-toggle="affix"
 $(document).ready(function() {
 
-  let toggleAffix = function(affixElement, scrollElement, wrapper) {
+	let toggleAffix = function(affixElement, scrollElement, wrapper) {
   
-    let height = affixElement.outerHeight(),
-        top = wrapper.offset().top;
+		let height = affixElement.outerHeight(),
+			btop = wrapper.offset().top;
     
-    if (scrollElement.scrollTop() >= top){
-        wrapper.height(height);
-        affixElement.addClass('affix');
-    }
-    else {
-        affixElement.removeClass('affix');
-        wrapper.height('auto');
-    }
-      
-  };
+		if (scrollElement.scrollTop() >= top){
+			wrapper.height(height);
+			affixElement.addClass('affix');
+		}
+		else {
+			affixElement.removeClass('affix');
+			wrapper.height('auto');
+		}
+	};
 
-  $('[data-toggle="affix"]').each(function() {
-    let element = $(this),
-        wrapper = $('<div></div>');
-    
-    element.before(wrapper);
-    $(window).on('scroll resize', function() {
-    	toggleAffix(element, $(this), wrapper);
-    });
-    
-    // initialize
-    // toggleAffix(element, $(window), wrapper);
-  });
-  
+	$('[data-toggle="affix"]').each(function() {
+		let element = $(this),
+			wrapper = $('<div></div>');
+
+		element.before(wrapper);
+		$(window).on('scroll resize', function() {
+			toggleAffix(element, $(this), wrapper);
+		});
+	});
 });
 
 
@@ -74,7 +69,6 @@ $(function() {
 			type: 'GET',
 			data: query,
 			success: function(response) {
-				
 				$('#searchAPIResults').html(response);
 			}
 		});
@@ -102,4 +96,10 @@ if ($('#book-list').length) {
 
 function processUserBooks (response) {
 	$('#book-list').html(response);
+
+	var filterizr = $('.filtr-container').filterizr({
+		layout: 'sameHeight',
+		multifilterLogicalOperator: 'or'
+	});
 }
+

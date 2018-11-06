@@ -1,7 +1,5 @@
 package com.bookexchange.servlets.ajax;
 
-import static com.mongodb.client.model.Filters.eq;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,17 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.bson.Document;
-
 import com.bookexchange.mongodb.model.Book;
-import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 /**
@@ -70,18 +60,18 @@ public class BookList extends HttpServlet {
 		
 		switch (listType) {
 			case "user":  
-				books = buildUserBooks(session, database);
+				books = Util.buildUserBooks(session, database);
 				urlType = "/edit";
 				break;
 			case "all":
-				books = buildAllBooks(session, database);
+				books = Util.buildAllBooks(session, database);
 				urlType = "";
 				break;
 		}
 
 		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
 		request.setAttribute("books", books);
-		request.setAttribute("linkBase", "/app/books/");
+		request.setAttribute("linkBase", "/app/books");
 		request.setAttribute("link", urlType);
 		request.getRequestDispatcher("/books/book.jsp").forward(request, mockHttpServletResponse);
 		buildHTML.append(mockHttpServletResponse.getOutput());
@@ -117,46 +107,5 @@ public class BookList extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-	}
-
-	private ArrayList<Book> buildUserBooks(HttpSession session, MongoDatabase database) {
-		ArrayList<Book> books = new ArrayList<Book>();
-		MongoCollection<Document> collection = database.getCollection("books");
-		
-		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIDs() != null) {
-			for(String bookID : user.getBookIDs()) {
-				FindIterable<Document> it = collection.find(eq("id", bookID));
-				for(Document doc : it) {
-					String json = doc.toJson();
-					Gson gson = new GsonBuilder().create();
-		    		Book book = gson.fromJson(json, Book.class);
-		    		books.add(book);
-				}
-			}
-		}
-		return books;
-	}
-
-	private ArrayList<Book> buildAllBooks(HttpSession session, MongoDatabase database) {
-		ArrayList<Book> books = new ArrayList<Book>();
-		MongoCollection<Document> collection = database.getCollection("books");
-		
-		BasicDBObject query = new BasicDBObject();
-		
-		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIDs() != null) {
-			query.put("id", new BasicDBObject("$nin", user.getBookIDs()));
-		}
-		
-		FindIterable<Document> it = collection.find(query);
-		for(Document doc : it) {
-			String json = doc.toJson();
-			Gson gson = new GsonBuilder().create();
-    		Book book = gson.fromJson(json, Book.class);
-    		books.add(book);
-		}
-
-		return books;
 	}
 }

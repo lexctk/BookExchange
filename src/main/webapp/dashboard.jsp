@@ -21,33 +21,7 @@
 	<div class="container-fluid" >
 		<div class="row">
 			<div class="col-xs-12 col-md-8 col-lg-9">
-				<h2>Latest Books</h2>
-				<div class="row">
-					<div class="col-6 col-md-4 col-lg-2">
-						<jsp:include page="books/book.jsp" >
-							<jsp:param name="thumbnail" value="https://books.google.com/books/content?id=W05ZDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api" />
-							<jsp:param name="title" value="The Alchimist" />
-							<jsp:param name="author" value="Paolo Coelho" />
-							<jsp:param name="dateAdded" value="2 days ago" />
-							<jsp:param name="location" value="Paris" />
-						</jsp:include>
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-					<div class="col-6 col-md-4 col-lg-2">
-
-					</div>
-				</div>
+				<h2>Latest Books</h2>			
 			</div>
 			<div class="col-xs-12 col-md-4 col-lg-3">
 				<h2>Events this week</h2>
