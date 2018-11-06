@@ -21,6 +21,6 @@
 		<script src="${pageContext.request.contextPath}/resources/scripts/main.js"></script>
 		
 		<!-- Include form validation -->
-		<script src="${pageContext.request.contextPath}/resources/scripts/forms.js"></script>		
+		<script src="${pageContext.request.contextPath}/resources/scripts/forms.js"></script>
 	</body>
 </html>

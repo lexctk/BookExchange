@@ -198,7 +198,8 @@ public class Util {
 		MongoCollection<Document> collection = database.getCollection("users");
 		
 		for(String userID : userIDs) {
-			FindIterable<Document> it = collection.find(eq("_id", userID));
+			var objectId = new ObjectId(userID);
+			FindIterable<Document> it = collection.find(eq("_id", objectId));
 			for(Document doc : it) {
 				String json = doc.toJson();
 				Gson gson = new GsonBuilder().create();

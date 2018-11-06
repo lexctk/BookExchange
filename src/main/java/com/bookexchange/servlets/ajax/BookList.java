@@ -61,7 +61,7 @@ public class BookList extends HttpServlet {
 		switch (listType) {
 			case "user":  
 				books = Util.buildUserBooks(session, database);
-				urlType = "/edit";
+				urlType = "";  //urlType = "/edit";
 				break;
 			case "all":
 				books = Util.buildAllBooks(session, database);

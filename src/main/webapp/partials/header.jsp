@@ -15,6 +15,8 @@
 		<!-- Font Awesome CSS -->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
 		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" />
+		
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/styles/main.css" />
 		
 		<title>BookExchange</title>

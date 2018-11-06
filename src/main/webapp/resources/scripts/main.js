@@ -96,10 +96,12 @@ if ($('#book-list').length) {
 
 function processUserBooks (response) {
 	$('#book-list').html(response);
-
-	var filterizr = $('.filtr-container').filterizr({
-		layout: 'sameHeight',
-		multifilterLogicalOperator: 'or'
-	});
+	
+	if ($('#book-list-filter').length) {
+		var filterizr = $('.filtr-container').filterizr({
+			layout: 'sameHeight',
+			multifilterLogicalOperator: 'or'
+		});
+	}
 }
 

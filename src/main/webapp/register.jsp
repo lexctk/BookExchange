@@ -10,7 +10,7 @@
 				<img class='logo' src="${pageContext.request.contextPath}/resources/images/logo-mini.png" alt="Book Exchange Logo"></img>
 				<div><h2><strong>BOOK</strong> Exchange</h2></div>
 			</div>
-			<form class="form-signin ui form spacer" action="register" method="post">
+			<form class="form-signin ui form spacer" action="register" method="post" enctype="multipart/form-data">
 				<div class="field">
 					<input type=text name="username" class="form-control" id="username" placeholder="Username">
 				</div>
@@ -28,7 +28,11 @@
 				<div class="field">
 					<input type="password" name="password" class="form-control" id="password" placeholder="Password">
 				</div>
-				<button type="submit" class="btn btn-primary btn-gradient btn-block">Register</button>
+				<div class="custom-file">
+					<input type="file" class="custom-file-input" id="userAvatar" name="userAvatar">
+					<label class="custom-file-label" for="userAvatar">Upload photo (optional)</label>
+				</div>				
+				<button type="submit" class="btn btn-primary btn-gradient btn-block spacer">Register</button>
 				<div class="ui error message"></div>
 			</form>
 			<div class="ui horizontal divider white">Or</div>

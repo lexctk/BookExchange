@@ -1,17 +1,21 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -26,6 +30,7 @@ import com.mongodb.client.MongoDatabase;
  * Servlet implementation class RegisterServlet
  */
 @WebServlet("/register")
+@MultipartConfig
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,6 +52,10 @@ public class RegisterServlet extends HttpServlet {
 		String lastname = request.getParameter("lastname");
 		
 		String password = BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));
+		
+		Part filePart = request.getPart("userAvatar"); 
+	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); 
+	    InputStream fileContent = filePart.getInputStream();
 
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;

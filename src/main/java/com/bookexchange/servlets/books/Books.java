@@ -47,7 +47,7 @@ public class Books extends HttpServlet {
 			Book book = Util.getOneBook (id, database);
 			request.setAttribute("id", id);
 			request.setAttribute("book", book);
-			System.out.println(book.getUserIDs().toString());
+			
 			if (book.getUserIDs() != null && book.getUserIDs().size() > 0) {
 				ArrayList<User> users = new ArrayList<User>();
 				users = Util.buildBookUsers(book.getUserIDs(), database);
