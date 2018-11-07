@@ -325,6 +325,32 @@ p.hero-item {
 /* ----------------------------------------------------------------------------- */
 
 
+/* -------------------------- Used on Profile Pages ---------------------------- */
+.userAvatar {
+	max-width: 290px;
+	max-height: 290px;
+ 	border-radius: 500px!important;
+	padding: 30px; 
+}
+.ui.card>.extra a {
+	color: #343a40!important;
+}
+
+.ui.attached.button {
+	background: #343a40!important;
+}
+
+.ui.attached.button > a {
+	color: white;
+}
+
+.ui.attached.button > a:hover {
+	color: white;
+}
+
+/* ----------------------------------------------------------------------------- */
+
+
 /* ---------------------------- Single Book Pages ------------------------------ */
 .image-fit > img {
 	width: 100%;

@@ -1,8 +1,6 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
+import com.bookexchange.util.AmazonS3Util;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -30,7 +29,7 @@ import com.mongodb.client.MongoDatabase;
  * Servlet implementation class RegisterServlet
  */
 @WebServlet("/register")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold=1024*1024*10,maxFileSize=1024*1024*10,maxRequestSize=1024*1024*20)
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -51,17 +50,20 @@ public class RegisterServlet extends HttpServlet {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		
-		String password = BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));
+		String locality = request.getParameter("locality");
+		String country = request.getParameter("country");
+		String lat = request.getParameter("lat");
+		String lng = request.getParameter("lng");
 		
-		Part filePart = request.getPart("userAvatar"); 
-	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); 
-	    InputStream fileContent = filePart.getInputStream();
-
+		String avatarString = request.getParameter("userAvatar");
+		
+		// use bcrypt for password
+		String password = BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));    
+	    
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
 		boolean isEmailFound = Util.searchEmail(email, database);
-
 		
 		if (isEmailFound) {
 			request.setAttribute("message", "Email already registered, please sign in instead");
@@ -72,9 +74,30 @@ public class RegisterServlet extends HttpServlet {
 			ObjectId _id = new ObjectId();
 			LocalDateTime now = LocalDateTime.now();
 			
-			Document doc = new Document("_id", _id).append("email", email).append("password", password)
-					.append("username", username).append("firstname", firstname).append("lastname", lastname)
+			String avatar = "";
+			if (avatarString != null && !avatarString.isEmpty()) {
+				try {
+					Part filePart = request.getPart("userAvatar");
+					avatar = AmazonS3Util.awsUpload(filePart, _id.toString());
+				} catch (final Exception e) {
+					System.out.println("Upload failed" + e.getMessage());
+				}
+			}
+		    
+			Document doc = new Document("_id", _id)
+					.append("email", email)
+					.append("password", password)
+					.append("username", username)
 					.append("registered", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+			
+			if (firstname != null && !firstname.isEmpty()) doc.append("firstname", firstname);
+			if (lastname != null && !lastname.isEmpty()) doc.append("lastname", lastname);
+			if (avatar != null && !avatar.isEmpty()) doc.append("avatar", avatar);
+			if (locality != null && !locality.isEmpty()) doc.append("locality", locality);
+			if (country != null && !country.isEmpty()) doc.append("country", country);
+			if (lat != null && !lat.isEmpty()) doc.append("lat", Double.parseDouble(lat));
+			if (lng != null && !lng.isEmpty()) doc.append("lng", Double.parseDouble(lng));
+					
 			MongoCollection<Document> collection = database.getCollection("users");
 			collection.insertOne(doc);
 
@@ -98,7 +121,6 @@ public class RegisterServlet extends HttpServlet {
             
             response.sendRedirect("app/dashboard");
 		}
-
 	}
 
 }

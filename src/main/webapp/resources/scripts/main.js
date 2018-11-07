@@ -4,7 +4,7 @@ $(document).ready(function() {
 	let toggleAffix = function(affixElement, scrollElement, wrapper) {
   
 		let height = affixElement.outerHeight(),
-			btop = wrapper.offset().top;
+			top = wrapper.offset().top;
     
 		if (scrollElement.scrollTop() >= top){
 			wrapper.height(height);

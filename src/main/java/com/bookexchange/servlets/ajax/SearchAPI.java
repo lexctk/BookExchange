@@ -96,7 +96,11 @@ public class SearchAPI extends HttpServlet {
             conn = (HttpURLConnection)url.openConnection();  
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("key", PropertiesUtil.getValue("GoogleBooksAPIKey"));
+            
+            String GoogleBooksAPIKey = System.getenv("GoogleBooksAPIKey");
+    		if (GoogleBooksAPIKey == null) GoogleBooksAPIKey = PropertiesUtil.getValue ("GoogleBooksAPIKey");
+    		
+            conn.setRequestProperty("key", GoogleBooksAPIKey);
             
             if (conn.getResponseCode() != 200) {
                 return ("{\"error\": \"Google Books API doesn't respond\"");
