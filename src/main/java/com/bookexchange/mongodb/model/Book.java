@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import com.bookexchange.util.MiscUtil;
+
 /**
  * 
  * Book model is split up to match API format, in order to be compatible with 
@@ -16,7 +18,7 @@ public class Book {
 
 	private String id;
 	private VolumeInfo volumeInfo;
-	private List<String> userIDs;
+	private List<UserIdsDates> userIdsDates;
 
 	public Book () {
 	}
@@ -37,12 +39,12 @@ public class Book {
 		this.volumeInfo = volumeInfo;
 	}
 
-	public List<String> getUserIDs() {
-		return Collections.unmodifiableList(userIDs);
+	public List<UserIdsDates> getUserIdsDates() {
+		return Collections.unmodifiableList(userIdsDates);
 	}
 
-	public void setUserIDs(List<String> userIDs) {
-		this.userIDs = new ArrayList<String>(userIDs);
+	public void setUserIDs(List<UserIdsDates> userIdsDates) {
+		this.userIdsDates = new ArrayList<UserIdsDates>(userIdsDates);
 	}
 	
 	/**
@@ -53,15 +55,18 @@ public class Book {
 	 */
 	public boolean addUser (String userID) {
 		
-		if (this.userIDs == null) {
-			this.userIDs = new ArrayList<String>();
+		if (this.userIdsDates == null) {
+			this.userIdsDates = new ArrayList<UserIdsDates>();
 		}
 		
-		if (this.userIDs.contains(userID)) {
+		// user already in list
+		if (this.userIdsDates.stream().filter(o -> o.getUserID().equals(userID)).findFirst().isPresent()) {
 			return false;
-		}
-		
-		this.userIDs.add(userID);
+		}		
+		UserIdsDates userIdDate = new UserIdsDates();
+		userIdDate.setUserID(userID);
+		userIdDate.setDateAdded(MiscUtil.nowToString());
+		this.userIdsDates.add(userIdDate);
 		return true;
 	}
 	

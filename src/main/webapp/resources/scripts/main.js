@@ -1,4 +1,5 @@
 // Fix to top with data-toggle="affix"
+//--------------------------------------------
 $(document).ready(function() {
 
 	let toggleAffix = function(affixElement, scrollElement, wrapper) {
@@ -26,9 +27,10 @@ $(document).ready(function() {
 		});
 	});
 });
-
+//--------------------------------------------
 
 // Smooth scroll to a destination
+//--------------------------------------------
 let $root = $('html, body');
 
 $('a[href^="#"]').click(function () {
@@ -37,8 +39,10 @@ $('a[href^="#"]').click(function () {
     }, 800);
     return false;
 });
+//--------------------------------------------
 
 // Back to top button
+//--------------------------------------------
 jQuery(document).ready(function() {
     let offset = 250;
     let duration = 300;
@@ -57,24 +61,41 @@ jQuery(document).ready(function() {
         return false;
     });
 });
+//--------------------------------------------
 
-// Call servlet from form, inject response in #searchAPIResults
+// Search API function
+//--------------------------------------------
+let index = 0;
+
 $(function() {
-	$('#searchAPI').on('submit', function(e) { 
+	$('#searchAPI').on('submit', function(e) {
 		e.preventDefault();
-		var query = $('#searchAPI :input').serializeArray();
-		
-		$.ajax({
-			url: '../searchapi',
-			type: 'GET',
-			data: query,
-			success: function(response) {
-				$('#searchAPIResults').html(response);
-			}
-		});
+		index = 0;
+		loadNextBooks()
 	});
 });
 
+function loadNextBooks() {
+	$('#searchAPIResults').html('<div class="ui active centered inline loader"></div>');
+	 
+	let query = $('#searchAPI :input').serializeArray();
+	query.push({name: 'index', value: index});
+	
+	$.ajax({
+		url: '../searchapi',
+		type: 'GET',
+		data: query,
+		success: function(response) {
+			$('#searchAPIResults').html(response);
+			index = index + 12;
+		}
+	});
+}
+//--------------------------------------------
+
+
+// Book List
+//--------------------------------------------
 let acknowledge = true;
 
 // show user books
@@ -104,4 +125,4 @@ function processUserBooks (response) {
 		});
 	}
 }
-
+//--------------------------------------------

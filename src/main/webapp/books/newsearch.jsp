@@ -8,7 +8,7 @@
 	<div class="container" >
 		<div class="hint spacer d-flex align-items-center justify-content-between flex-sm-row flex-column">
 			<div class="p-2"><h2>Step 1: Search for your book </h2></div>
-			<div class="p-2"><a class="btn btn-light btn-lg btn-icon" role="button" href="${pageContext.request.contextPath}/app/books/new">Skip <i class="fas fa-chevron-right"></i></a></div>
+			<div class="p-2"><a class="btn btn-light btn-gradient btn-lg btn-icon" role="button" href="${pageContext.request.contextPath}/app/books/new">Skip <i class="fas fa-chevron-right"></i></a></div>
 		</div>
 		<form id="searchAPI">
 			<div class="ui fluid form spacer">
@@ -29,7 +29,7 @@
 				<div class="item"><i class="lightbulb outline icon"></i>Use keyword inauthor: to search in authors only</div>
 				<div class="item"><i class="lightbulb outline icon"></i>Use keyword isbn: to search by ISBN only</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </section>
 

@@ -15,14 +15,11 @@
 		<div class="row spacer">
 			<div class="col-12 col-md-4 col-lg-3 d-flex justify-content-center">
 			<div class="align-self-center">
-				<label for="userThumbnail">
-					<% if (request.getAttribute("thumbnail") != null && request.getAttribute("thumbnail").toString().length()>0) { %>
-						<img src="${thumbnail}">
-					<% } else { %>
-						<i class="fas fa-book"></i>
-					<% } %>
-				</label>
-				<input name="userThumbnail" id="userThumbnail" class="hidden" type="file" form="new_book">
+				<% if (request.getAttribute("thumbnail") != null && request.getAttribute("thumbnail").toString().length()>0) { %>
+					<img src="${thumbnail}">
+				<% } else { %>
+					<i class="fas fa-book"></i>
+				<% } %>
 			</div>
 			</div>
 			<div class="col-12 col-md-8 col-lg-9">
@@ -63,7 +60,7 @@
 					</div>
 					<input name="thumbnail" id="thumbnail" class="hidden" type="url" value="${thumbnail}">
 					<input name="id" id="id" class="hidden" type="text" value="${id}">
-					<button class="btn btn-light btn-lg btn-noicon" type="submit">Add</button>
+					<button class="btn btn-light btn-lg btn-gradient btn-noicon" type="submit">Add</button>
 				</form>
 			</div>
 		</div>

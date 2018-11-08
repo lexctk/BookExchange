@@ -1,13 +1,12 @@
 package com.bookexchange.mongodb.model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.bson.types.ObjectId;
+
+import com.bookexchange.util.MiscUtil;
 
 public class User {
 
@@ -18,13 +17,10 @@ public class User {
 	private String lastname;
 	private String email;
 	private String password;
-	private List<String> bookIDs;
 	private String registered;
 	private String avatar;
-	private String locality;
-	private String country;
-	private double lat;
-	private double lng;
+	private Location location;
+	private List<BookIdsDates> bookIdsDates;
 
 	public User() {
 	}
@@ -77,13 +73,13 @@ public class User {
 		this._id = _id;
 	}
 	
-	public List<String> getBookIDs() {
-		if (bookIDs == null) return null;
-		return Collections.unmodifiableList(bookIDs);
+	public List<BookIdsDates> getBookIdsDates() {
+		if (bookIdsDates == null) return null;
+		return Collections.unmodifiableList(bookIdsDates);
 	}
 
-	public void setBookIDs(List<String> bookIDs) {
-		this.bookIDs = new ArrayList<String>(bookIDs);
+	public void setBookIdsDates(List<BookIdsDates> bookIdsDates) {
+		this.bookIdsDates = new ArrayList<BookIdsDates>(bookIdsDates);
 	}
 	
 	public String getRegistered() {
@@ -102,38 +98,13 @@ public class User {
 		this.avatar = avatar;
 	}
 	
-
-	public String getLocality() {
-		return locality;
+	public Location getLocation() {
+		return location;
 	}
 
-	public void setLocality(String locality) {
-		this.locality = locality;
+	public void setLocation(Location location) {
+		this.location = location;
 	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public double getLat() {
-		return lat;
-	}
-
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public void setLng(double lng) {
-		this.lng = lng;
-	}	
 	
 	/**
 	 * Adds a book id to the list of books. 
@@ -143,33 +114,39 @@ public class User {
 	 */
 	public boolean addBook (String bookID) {
 		
-		if (this.bookIDs == null) {
-			this.bookIDs = new ArrayList<String>();
+		// if list of books doesn't exist, create it
+		if (this.bookIdsDates == null) {
+			this.bookIdsDates = new ArrayList<BookIdsDates>();
 		}
-
-		if (this.bookIDs.contains(bookID)) {
-			System.out.println("contains");
+		
+		//book already in list
+		if (this.bookIdsDates.stream().filter(o -> o.getBookID().equals(bookID)).findFirst().isPresent()) {
 			return false;
 		}
-		this.bookIDs.add(bookID);
+		BookIdsDates bookIdDate = new BookIdsDates();
+		bookIdDate.setBookID(bookID);
+		bookIdDate.setDateAdded(MiscUtil.nowToString());
+		
+		this.bookIdsDates.add(bookIdDate);
 		return true;
 	}
 	
 	
 	/**
-	 * Get registration month from date
+	 * Get registration month
 	 * 
 	 * @return month as string, in English (January, February...)
 	 */
 	public String getRegisteredMonth() {
-		LocalDate dateTime = LocalDate.parse(this.registered, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("MMMM").withLocale(Locale.ENGLISH);
-		return dateTime.format(df_en);
+		return MiscUtil.getRegisteredMonth(this.registered);
 	}
 	
+	/**
+	 * Get registration year
+	 * 
+	 * @return year as 'YYYY' format
+	 */
 	public String getRegisteredYear() {
-		LocalDate dateTime = LocalDate.parse(this.registered, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("yyyy").withLocale(Locale.ENGLISH);
-		return dateTime.format(df_en);		
+		return MiscUtil.getRegisteredYear(this.registered);	
 	}
 }

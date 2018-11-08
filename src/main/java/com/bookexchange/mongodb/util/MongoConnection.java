@@ -1,7 +1,7 @@
 package com.bookexchange.mongodb.util;
 
 import com.mongodb.client.MongoClients;
-import com.bookexchange.util.PropertiesUtil;
+import com.bookexchange.util.MiscUtil;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
@@ -16,7 +16,7 @@ public class MongoConnection {
 		
 		//get mlab url from environment variable or from properties file
 		String mlab = System.getenv("MLAB");
-		if (mlab == null) mlab = PropertiesUtil.getValue ("MLAB");
+		if (mlab == null) mlab = MiscUtil.getValue ("MLAB");
 
 		mongo = MongoClients.create(mlab);
 		

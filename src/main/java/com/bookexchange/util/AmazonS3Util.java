@@ -68,10 +68,10 @@ public class AmazonS3Util {
 	 */
 	private static BasicAWSCredentials awsCredentials() {
 		String AWS_ACCESS_KEY_ID = System.getenv("AWS_ACCESS_KEY_ID");
-		if (AWS_ACCESS_KEY_ID == null) AWS_ACCESS_KEY_ID = PropertiesUtil.getValue ("AWS_ACCESS_KEY_ID");
+		if (AWS_ACCESS_KEY_ID == null) AWS_ACCESS_KEY_ID = MiscUtil.getValue ("AWS_ACCESS_KEY_ID");
 		
 		String AWS_SECRET_ACCESS_KEY = System.getenv("AWS_SECRET_ACCESS_KEY");
-		if (AWS_SECRET_ACCESS_KEY == null) AWS_SECRET_ACCESS_KEY = PropertiesUtil.getValue ("AWS_SECRET_ACCESS_KEY");	
+		if (AWS_SECRET_ACCESS_KEY == null) AWS_SECRET_ACCESS_KEY = MiscUtil.getValue ("AWS_SECRET_ACCESS_KEY");	
 	    
 	    BasicAWSCredentials creds = new BasicAWSCredentials(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY); 
 	    return creds;

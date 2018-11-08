@@ -14,7 +14,10 @@ import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.model.Book;
+import com.bookexchange.mongodb.model.BookIdsDates;
 import com.bookexchange.mongodb.model.User;
+import com.bookexchange.mongodb.model.UserIdsDates;
+import com.bookexchange.util.MiscUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
@@ -22,6 +25,10 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+/**
+ * @author lexa
+ *
+ */
 public class Util {
 
 	/**
@@ -88,13 +95,19 @@ public class Util {
         		)).first().toJson();
         Gson gson = new GsonBuilder().create();
 		user = gson.fromJson(userJson, User.class);
-		
 		// for some reason gson doesn't parse _id
 		user.set_id((ObjectId) session.getAttribute("_id"));
 
         return user;
 	}
 
+	
+	/**
+	 * Get one book based on id
+	 * @param id
+	 * @param database
+	 * @return Book object
+	 */
 	public static Book getOneBook (String id, MongoDatabase database) {
 		MongoCollection<Document> collection = database.getCollection("books");
 		
@@ -107,6 +120,17 @@ public class Util {
 		return book;
 	}
 	
+	/**
+	 * Add a book to the database and to a user's collection.
+	 * 
+	 * If the book already exists in the database, only add user to the 
+	 * list of users that own the book and add book to the list of books that user owns.
+	 * 
+	 * @param book
+	 * @param user
+	 * @param database
+	 * @return true if added successfully, false otherwise
+	 */
 	public static boolean addBookToCollection (Book book, User user, MongoDatabase database) {
 		boolean bookAdded = false;
 		
@@ -135,6 +159,13 @@ public class Util {
 		return bookAdded;
 	}
 	
+	/**
+	 * Add a book to the list of books a user owns
+	 * @param book
+	 * @param user
+	 * @param database
+	 * @return true if added successfully
+	 */
 	public static boolean addBookToUser (Book book, User user, MongoDatabase database) {
 		boolean bookAdded = false;
 
@@ -144,22 +175,32 @@ public class Util {
         if (findUser == null) {
         	//TODO: handle error: this is an exception, user should be logged in so should exist in the database!
         } else {
+        	Document doc = new Document ();
+        	doc.append("bookID", book.getId());
+        	doc.append("dateAdded", MiscUtil.nowToString());
         	collection.updateOne(
         			eq("_id", user.get_id()),
-        			new Document("$push", new Document("bookIDs", book.getId())));
+        			new Document("$push", new Document("bookIdsDates", doc)));
         	bookAdded = true;
         }
         return bookAdded;
 	}
 	
+	/**
+	 * Build a lit of books the current user owns. 
+	 * @param session
+	 * @param database
+	 * @return list of books
+	 */
 	public static ArrayList<Book> buildUserBooks(HttpSession session, MongoDatabase database) {
+		
 		ArrayList<Book> books = new ArrayList<Book>();
 		MongoCollection<Document> collection = database.getCollection("books");
 		
 		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIDs() != null) {
-			for(String bookID : user.getBookIDs()) {
-				FindIterable<Document> it = collection.find(eq("id", bookID));
+		if (user.getBookIdsDates() != null) {
+			for(BookIdsDates bookIdsDates : user.getBookIdsDates()) {
+				FindIterable<Document> it = collection.find(eq("id", bookIdsDates.getBookID()));
 				for(Document doc : it) {
 					String json = doc.toJson();
 					Gson gson = new GsonBuilder().create();
@@ -171,15 +212,27 @@ public class Util {
 		return books;
 	}
 
+	
+	/**
+	 * Build a list of all the books in the database, excluding books current user owns
+	 * @param session
+	 * @param database
+	 * @return list of books
+	 */
 	public static ArrayList<Book> buildAllBooks(HttpSession session, MongoDatabase database) {
 		ArrayList<Book> books = new ArrayList<Book>();
 		MongoCollection<Document> collection = database.getCollection("books");
 		
 		BasicDBObject query = new BasicDBObject();
 		
+		//exclude books current user owns
 		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIDs() != null) {
-			query.put("id", new BasicDBObject("$nin", user.getBookIDs()));
+		if (user.getBookIdsDates() != null) {
+			List<String> bookIDs = new ArrayList<>(user.getBookIdsDates().size());
+			for (BookIdsDates bookIdDate : user.getBookIdsDates()) {
+				bookIDs.add(bookIdDate.getBookID());
+			}
+			query.put("id", new BasicDBObject("$nin", bookIDs));
 		}
 		
 		FindIterable<Document> it = collection.find(query);
@@ -193,12 +246,12 @@ public class Util {
 		return books;
 	}	
 	
-	public static ArrayList<User> buildBookUsers(List<String> userIDs, MongoDatabase database) {
+	public static ArrayList<User> buildBookUsers(List<UserIdsDates> userIdsDates, MongoDatabase database) {
 		ArrayList<User> users = new ArrayList<User>();
 		MongoCollection<Document> collection = database.getCollection("users");
 		
-		for(String userID : userIDs) {
-			var objectId = new ObjectId(userID);
+		for(UserIdsDates userIdDate : userIdsDates) {
+			var objectId = new ObjectId(userIdDate.getUserID());
 			FindIterable<Document> it = collection.find(eq("_id", objectId));
 			for(Document doc : it) {
 				String json = doc.toJson();

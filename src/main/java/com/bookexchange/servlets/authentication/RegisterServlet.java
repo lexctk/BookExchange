@@ -1,8 +1,6 @@
 package com.bookexchange.servlets.authentication;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +20,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.bookexchange.mongodb.util.MongoConnection;
 import com.bookexchange.mongodb.util.Util;
 import com.bookexchange.util.AmazonS3Util;
+import com.bookexchange.util.MiscUtil;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -54,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
 		String country = request.getParameter("country");
 		String lat = request.getParameter("lat");
 		String lng = request.getParameter("lng");
-		
+
 		String avatarString = request.getParameter("userAvatar");
 		
 		// use bcrypt for password
@@ -72,8 +71,7 @@ public class RegisterServlet extends HttpServlet {
 			
 		} else {
 			ObjectId _id = new ObjectId();
-			LocalDateTime now = LocalDateTime.now();
-			
+
 			String avatar = "";
 			if (avatarString != null && !avatarString.isEmpty()) {
 				try {
@@ -88,15 +86,19 @@ public class RegisterServlet extends HttpServlet {
 					.append("email", email)
 					.append("password", password)
 					.append("username", username)
-					.append("registered", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+					.append("registered", MiscUtil.nowToString());
 			
 			if (firstname != null && !firstname.isEmpty()) doc.append("firstname", firstname);
 			if (lastname != null && !lastname.isEmpty()) doc.append("lastname", lastname);
 			if (avatar != null && !avatar.isEmpty()) doc.append("avatar", avatar);
-			if (locality != null && !locality.isEmpty()) doc.append("locality", locality);
-			if (country != null && !country.isEmpty()) doc.append("country", country);
-			if (lat != null && !lat.isEmpty()) doc.append("lat", Double.parseDouble(lat));
-			if (lng != null && !lng.isEmpty()) doc.append("lng", Double.parseDouble(lng));
+			
+			Document locationDoc = new Document();
+			if (locality != null && !locality.isEmpty()) locationDoc.append("locality", locality);
+			if (country != null && !country.isEmpty()) locationDoc.append("country", country);
+			if (lat != null && !lat.isEmpty()) locationDoc.append("lat", Double.parseDouble(lat));
+			if (lng != null && !lng.isEmpty()) locationDoc.append("lng", Double.parseDouble(lng));
+			
+			doc.append("location", locationDoc);
 					
 			MongoCollection<Document> collection = database.getCollection("users");
 			collection.insertOne(doc);

@@ -48,9 +48,9 @@ public class Books extends HttpServlet {
 			request.setAttribute("id", id);
 			request.setAttribute("book", book);
 			
-			if (book.getUserIDs() != null && book.getUserIDs().size() > 0) {
+			if (book.getUserIdsDates() != null && book.getUserIdsDates().size() > 0) {
 				ArrayList<User> users = new ArrayList<User>();
-				users = Util.buildBookUsers(book.getUserIDs(), database);
+				users = Util.buildBookUsers(book.getUserIdsDates(), database);
 				request.setAttribute("users", users);
 			}
 			request.getRequestDispatcher("/books/book-single.jsp").forward(request, response);

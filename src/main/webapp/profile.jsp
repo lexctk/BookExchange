@@ -29,7 +29,7 @@
 						</div>
 					</div>
 					<div class="extra content text-center">
-						<a><i class="map marker icon"></i>${user.getLocality()}, ${user.getCountry()}</a>
+						<a><i class="map marker icon"></i>${user.getLocation().getLocality()}, ${user.getLocation().getCountry()}</a>
 					</div>
 					<div class="ui bottom attached button">
 						<a href="profile/edit"><i class="edit icon"></i> Edit</a>
