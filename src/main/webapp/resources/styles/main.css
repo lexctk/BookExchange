@@ -324,11 +324,13 @@ p.hero-item {
 
 /* -------------------------- Used on Profile Pages ---------------------------- */
 .userAvatar {
-	max-width: 290px;
-	max-height: 290px;
- 	border-radius: 500px!important;
+	width: 290px !important;
+	height: 290px !important;
+ 	border-radius: 50%!important;
 	padding: 30px; 
+	object-fit: cover;
 }
+
 .ui.card>.extra a {
 	color: #343a40!important;
 }
@@ -352,8 +354,13 @@ p.hero-item {
 .image-fit > img {
 	width: 100%;
 }
+
 .flag-icon {
 	margin-right: 5px;
+}
+
+.flag-icon-en {
+	background-image: url(../flags/4x3/gb.svg);
 }
 
 /* ----------------------------------------------------------------------------- */

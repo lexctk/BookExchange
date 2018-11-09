@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.util.MongoConnection;
-import com.bookexchange.mongodb.util.Util;
+import com.bookexchange.mongodb.util.MongoUtil;
 import com.mongodb.client.MongoDatabase;
 
 /**
@@ -60,11 +60,11 @@ public class BookList extends HttpServlet {
 		
 		switch (listType) {
 			case "user":  
-				books = Util.buildUserBooks(session, database);
+				books = MongoUtil.buildUserBooks(session, database);
 				urlType = "";  //urlType = "/edit";
 				break;
 			case "all":
-				books = Util.buildAllBooks(session, database);
+				books = MongoUtil.buildAllBooks(session, database);
 				urlType = "";
 				break;
 		}

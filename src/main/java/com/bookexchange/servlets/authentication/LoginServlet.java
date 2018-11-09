@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.util.MongoConnection;
-import com.bookexchange.mongodb.util.Util;
+import com.bookexchange.mongodb.util.MongoUtil;
 import com.mongodb.client.MongoDatabase;
 
 /**
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 	
-		Document isUserFound = Util.authenticateUser(email.toLowerCase(), password, database);
+		Document isUserFound = MongoUtil.authenticateUser(email.toLowerCase(), password, database);
 		
 		if (isUserFound != null) {
 			

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.model.Book;
-import com.bookexchange.util.JsonBookParser;
+import com.bookexchange.util.JsonParser;
 import com.bookexchange.util.MiscUtil;
 
 /**
@@ -50,7 +50,7 @@ public class SearchAPI extends HttpServlet {
 		}
 		String json = getJSONString (query, index);
 		
-		ArrayList<Book> books = JsonBookParser.toBooks(json);
+		ArrayList<Book> books = JsonParser.toBooks(json);
 		
 		StringBuilder buildHTML = new StringBuilder();
 		buildHTML.append("<div class='row'>");

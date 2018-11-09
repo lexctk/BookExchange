@@ -18,7 +18,7 @@ public class Book {
 
 	private String id;
 	private VolumeInfo volumeInfo;
-	private List<UserIdsDates> userIdsDates;
+	private List<BookOwnerInformation> bookOwnerInformation;
 
 	public Book () {
 	}
@@ -39,12 +39,12 @@ public class Book {
 		this.volumeInfo = volumeInfo;
 	}
 
-	public List<UserIdsDates> getUserIdsDates() {
-		return Collections.unmodifiableList(userIdsDates);
+	public List<BookOwnerInformation> getBookOwnerInformation() {
+		return Collections.unmodifiableList(bookOwnerInformation);
 	}
 
-	public void setUserIDs(List<UserIdsDates> userIdsDates) {
-		this.userIdsDates = new ArrayList<UserIdsDates>(userIdsDates);
+	public void setBookOwnerInformation(List<BookOwnerInformation> bookOwnerInformation) {
+		this.bookOwnerInformation = new ArrayList<BookOwnerInformation>(bookOwnerInformation);
 	}
 	
 	/**
@@ -53,20 +53,21 @@ public class Book {
 	 * @param userID id to be added to the list
 	 * @return true if user was added, false if user already exists
 	 */
-	public boolean addUser (String userID) {
+	public boolean addUser (String userID, Location location) {
 		
-		if (this.userIdsDates == null) {
-			this.userIdsDates = new ArrayList<UserIdsDates>();
+		if (this.bookOwnerInformation == null) {
+			this.bookOwnerInformation = new ArrayList<BookOwnerInformation>();
 		}
 		
 		// user already in list
-		if (this.userIdsDates.stream().filter(o -> o.getUserID().equals(userID)).findFirst().isPresent()) {
+		if (this.bookOwnerInformation.stream().filter(o -> o.getUserID().equals(userID)).findFirst().isPresent()) {
 			return false;
 		}		
-		UserIdsDates userIdDate = new UserIdsDates();
-		userIdDate.setUserID(userID);
-		userIdDate.setDateAdded(MiscUtil.nowToString());
-		this.userIdsDates.add(userIdDate);
+		BookOwnerInformation bookOwnerInformation = new BookOwnerInformation();
+		bookOwnerInformation.setUserID(userID);
+		bookOwnerInformation.setDateAdded(MiscUtil.nowToString());
+		bookOwnerInformation.setLocation(location);
+		this.bookOwnerInformation.add(bookOwnerInformation);
 		return true;
 	}
 	

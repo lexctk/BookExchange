@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
-import com.bookexchange.mongodb.util.Util;
+import com.bookexchange.mongodb.util.MongoUtil;
 import com.mongodb.client.MongoDatabase;
 
 /**
@@ -38,7 +38,7 @@ public class Profile extends HttpServlet {
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
-		User user = Util.getCurrentUser(session, database);
+		User user = MongoUtil.getCurrentUser(session, database);
 		request.setAttribute("user", user);
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 	}

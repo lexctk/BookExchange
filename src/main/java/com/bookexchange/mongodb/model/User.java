@@ -20,10 +20,18 @@ public class User {
 	private String registered;
 	private String avatar;
 	private Location location;
-	private List<BookIdsDates> bookIdsDates;
+	private List<UserBookList> userBookList;
 
 	public User() {
 	}
+	
+	public ObjectId get_id() {
+		return _id;
+	}
+
+	public void set_id(ObjectId _id) {
+		this._id = _id;
+	}	
 
 	public String getUsername() {
 		return username;
@@ -64,23 +72,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public ObjectId get_id() {
-		return _id;
-	}
-
-	public void set_id(ObjectId _id) {
-		this._id = _id;
-	}
-	
-	public List<BookIdsDates> getBookIdsDates() {
-		if (bookIdsDates == null) return null;
-		return Collections.unmodifiableList(bookIdsDates);
-	}
-
-	public void setBookIdsDates(List<BookIdsDates> bookIdsDates) {
-		this.bookIdsDates = new ArrayList<BookIdsDates>(bookIdsDates);
-	}
 	
 	public String getRegistered() {
 		return registered;
@@ -105,6 +96,15 @@ public class User {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
+
+	public List<UserBookList> getUserBookList() {
+		if (userBookList == null) return null;
+		return Collections.unmodifiableList(userBookList);
+	}
+
+	public void setUserBookList(List<UserBookList> userBookList) {
+		this.userBookList = new ArrayList<UserBookList>(userBookList);
+	}
 	
 	/**
 	 * Adds a book id to the list of books. 
@@ -115,19 +115,19 @@ public class User {
 	public boolean addBook (String bookID) {
 		
 		// if list of books doesn't exist, create it
-		if (this.bookIdsDates == null) {
-			this.bookIdsDates = new ArrayList<BookIdsDates>();
+		if (this.userBookList == null) {
+			this.userBookList = new ArrayList<UserBookList>();
 		}
 		
 		//book already in list
-		if (this.bookIdsDates.stream().filter(o -> o.getBookID().equals(bookID)).findFirst().isPresent()) {
+		if (this.userBookList.stream().filter(o -> o.getBookID().equals(bookID)).findFirst().isPresent()) {
 			return false;
 		}
-		BookIdsDates bookIdDate = new BookIdsDates();
-		bookIdDate.setBookID(bookID);
-		bookIdDate.setDateAdded(MiscUtil.nowToString());
+		UserBookList userBookList = new UserBookList();
+		userBookList.setBookID(bookID);
+		userBookList.setDateAdded(MiscUtil.nowToString());
 		
-		this.bookIdsDates.add(bookIdDate);
+		this.userBookList.add(userBookList);
 		return true;
 	}
 	

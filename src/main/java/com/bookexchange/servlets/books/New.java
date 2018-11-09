@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookexchange.mongodb.model.Book;
-import com.bookexchange.util.JsonBookParser;
+import com.bookexchange.util.JsonParser;
 
 /**
  * Servlet implementation class New
@@ -38,7 +38,7 @@ public class New extends HttpServlet {
 			HttpSession httpSession = request.getSession();
 			String booksString = (String)httpSession.getAttribute("books");
 			
-			ArrayList<Book> books = JsonBookParser.toBooks(booksString);
+			ArrayList<Book> books = JsonParser.toBooks(booksString);
 			
 			for (int i = 0; i < books.size(); i++) {
 				Book oneBook = books.get(i);

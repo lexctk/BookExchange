@@ -1,11 +1,11 @@
 package com.bookexchange.mongodb.model;
 
-public class BookIdsDates {
+public class UserBookList {
 	
 	private String bookID;
 	private String dateAdded;
 	
-	public BookIdsDates () {
+	public UserBookList () {
 	}
 	
 	public String getDateAdded() {

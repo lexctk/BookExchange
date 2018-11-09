@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.User;
 import com.bookexchange.mongodb.util.MongoConnection;
-import com.bookexchange.mongodb.util.Util;
-import com.bookexchange.util.JsonBookParser;
+import com.bookexchange.mongodb.util.MongoUtil;
+import com.bookexchange.util.JsonParser;
 import com.mongodb.client.MongoDatabase;
 
 
@@ -44,13 +44,13 @@ public class Books extends HttpServlet {
 			//has id, show one book and users offering it
 			MongoConnection mongo = MongoConnection.getInstance();
 			MongoDatabase database = mongo.database;
-			Book book = Util.getOneBook (id, database);
+			Book book = MongoUtil.getOneBook (id, database);
 			request.setAttribute("id", id);
 			request.setAttribute("book", book);
 			
-			if (book.getUserIdsDates() != null && book.getUserIdsDates().size() > 0) {
+			if (book.getBookOwnerInformation() != null && book.getBookOwnerInformation().size() > 0) {
 				ArrayList<User> users = new ArrayList<User>();
-				users = Util.buildBookUsers(book.getUserIdsDates(), database);
+				users = MongoUtil.buildBookUsers(book.getBookOwnerInformation(), database);
 				request.setAttribute("users", users);
 			}
 			request.getRequestDispatcher("/books/book-single.jsp").forward(request, response);
@@ -64,7 +64,7 @@ public class Books extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		// add new book to database
-		Book book = JsonBookParser.stringsToBook(
+		Book book = JsonParser.stringsToBook(
 				request.getParameter("id"), 
 				request.getParameter("title"), 
 				request.getParameter("authors"), 
@@ -79,9 +79,9 @@ public class Books extends HttpServlet {
 		MongoDatabase database = mongo.database;
 		
 		HttpSession session = request.getSession(false);
-		User user = Util.getCurrentUser(session, database);
-
-		Util.addBookToCollection(book, user, database);
+		User user = MongoUtil.getCurrentUser(session, database);
+		
+		MongoUtil.addBookToCollection(book, user, database);
 		response.sendRedirect("profile");
 	}	
 }

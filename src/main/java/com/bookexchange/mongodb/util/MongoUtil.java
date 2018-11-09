@@ -14,9 +14,9 @@ import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.model.Book;
-import com.bookexchange.mongodb.model.BookIdsDates;
+import com.bookexchange.mongodb.model.UserBookList;
 import com.bookexchange.mongodb.model.User;
-import com.bookexchange.mongodb.model.UserIdsDates;
+import com.bookexchange.mongodb.model.BookOwnerInformation;
 import com.bookexchange.util.MiscUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,7 +29,7 @@ import com.mongodb.client.MongoDatabase;
  * @author lexa
  *
  */
-public class Util {
+public class MongoUtil {
 
 	/**
 	 * Search user in database by email, and if password matches database value, return user as Document
@@ -93,6 +93,7 @@ public class Util {
         		eq("username", (String) session.getAttribute("username")), 
         		eq("_id", (ObjectId) session.getAttribute("_id"))
         		)).first().toJson();
+        
         Gson gson = new GsonBuilder().create();
 		user = gson.fromJson(userJson, User.class);
 		// for some reason gson doesn't parse _id
@@ -138,21 +139,42 @@ public class Util {
 		
 		Document findBook = collection.find(eq("id", book.getId())).first();
 		if (findBook != null) {
-			// TODO: this book already exists in collection, just update user ownership and book ownership
+			
+			// this book already exists in collection, update book owners list
+	       	Document doc = new Document ();
+        	doc.append("userID", user.get_id().toString());
+        	doc.append("dateAdded", MiscUtil.nowToString());
+        	
+        	Document locationDoc = new Document()
+        			.append("locality", user.getLocation().getLocality())
+        			.append("country", user.getLocation().getCountry())
+        			.append("lat", user.getLocation().getLat())
+        			.append("lng", user.getLocation().getLng());
+        	doc.append("location", locationDoc);
+        	
+        	collection.updateOne(
+        			eq("id", book.getId()),
+        			new Document("$push", new Document("bookOwnerInformation", doc)));
+        	
+        	// add book to user's list
+        	bookAdded = addBookToUser (book, user, database);
+        	
 		} else {
 			// it's a new book, add to collection update user ownership and book ownership
-			if (book.addUser(user.get_id().toString())) {
+			if (book.addUser(user.get_id().toString(), user.getLocation())) {
 				
 				// true: insert book in collection
 				Gson gson = new Gson();
 		        String json = gson.toJson(book);
 		        Document document = Document.parse(json);
 		        collection.insertOne(document);
+		        
 		        bookAdded = addBookToUser (book, user, database);
 		        
 			} else {
-				// false: user already owns this book
-				// TODO: send error message
+				//user already owns this book, don't add it. 
+				//TODO: user message!
+				return false;
 			}
 
 		}
@@ -180,7 +202,7 @@ public class Util {
         	doc.append("dateAdded", MiscUtil.nowToString());
         	collection.updateOne(
         			eq("_id", user.get_id()),
-        			new Document("$push", new Document("bookIdsDates", doc)));
+        			new Document("$push", new Document("userBookList", doc)));
         	bookAdded = true;
         }
         return bookAdded;
@@ -197,10 +219,12 @@ public class Util {
 		ArrayList<Book> books = new ArrayList<Book>();
 		MongoCollection<Document> collection = database.getCollection("books");
 		
-		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIdsDates() != null) {
-			for(BookIdsDates bookIdsDates : user.getBookIdsDates()) {
-				FindIterable<Document> it = collection.find(eq("id", bookIdsDates.getBookID()));
+		User user = getCurrentUser(session, database);
+		
+		if (user.getUserBookList() != null) {
+			for(UserBookList userBookList : user.getUserBookList()) {
+				
+				FindIterable<Document> it = collection.find(eq("id", userBookList.getBookID()));
 				for(Document doc : it) {
 					String json = doc.toJson();
 					Gson gson = new GsonBuilder().create();
@@ -226,11 +250,11 @@ public class Util {
 		BasicDBObject query = new BasicDBObject();
 		
 		//exclude books current user owns
-		User user = Util.getCurrentUser(session, database);
-		if (user.getBookIdsDates() != null) {
-			List<String> bookIDs = new ArrayList<>(user.getBookIdsDates().size());
-			for (BookIdsDates bookIdDate : user.getBookIdsDates()) {
-				bookIDs.add(bookIdDate.getBookID());
+		User user = getCurrentUser(session, database);
+		if (user.getUserBookList() != null) {
+			List<String> bookIDs = new ArrayList<>(user.getUserBookList().size());
+			for (UserBookList userBookList : user.getUserBookList()) {
+				bookIDs.add(userBookList.getBookID());
 			}
 			query.put("id", new BasicDBObject("$nin", bookIDs));
 		}
@@ -246,12 +270,12 @@ public class Util {
 		return books;
 	}	
 	
-	public static ArrayList<User> buildBookUsers(List<UserIdsDates> userIdsDates, MongoDatabase database) {
+	public static ArrayList<User> buildBookUsers(List<BookOwnerInformation> bookOwnerInformationList, MongoDatabase database) {
 		ArrayList<User> users = new ArrayList<User>();
 		MongoCollection<Document> collection = database.getCollection("users");
 		
-		for(UserIdsDates userIdDate : userIdsDates) {
-			var objectId = new ObjectId(userIdDate.getUserID());
+		for(BookOwnerInformation bookOwnerInformation : bookOwnerInformationList) {
+			var objectId = new ObjectId(bookOwnerInformation.getUserID());
 			FindIterable<Document> it = collection.find(eq("_id", objectId));
 			for(Document doc : it) {
 				String json = doc.toJson();

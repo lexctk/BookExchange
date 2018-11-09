@@ -15,9 +15,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-public class JsonBookParser {
+public class JsonParser {
 	
-    //Covert json string to ArrayList of Book objects
+    // Covert json string to ArrayList of Book objects
+	// (Gson doesn't work with ArrayList)
     public static ArrayList<Book> toBooks(String jsonString) {
         try {   	
 	    	// Parse the JSON response.

@@ -18,7 +18,7 @@ import org.bson.types.ObjectId;
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookexchange.mongodb.util.MongoConnection;
-import com.bookexchange.mongodb.util.Util;
+import com.bookexchange.mongodb.util.MongoUtil;
 import com.bookexchange.util.AmazonS3Util;
 import com.bookexchange.util.MiscUtil;
 import com.mongodb.client.MongoCollection;
@@ -54,15 +54,13 @@ public class RegisterServlet extends HttpServlet {
 		String lat = request.getParameter("lat");
 		String lng = request.getParameter("lng");
 
-		String avatarString = request.getParameter("userAvatar");
-		
 		// use bcrypt for password
 		String password = BCrypt.hashpw(plainPassword, BCrypt.gensalt(12));    
 	    
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
-		boolean isEmailFound = Util.searchEmail(email, database);
+		boolean isEmailFound = MongoUtil.searchEmail(email, database);
 		
 		if (isEmailFound) {
 			request.setAttribute("message", "Email already registered, please sign in instead");
@@ -73,13 +71,14 @@ public class RegisterServlet extends HttpServlet {
 			ObjectId _id = new ObjectId();
 
 			String avatar = "";
-			if (avatarString != null && !avatarString.isEmpty()) {
-				try {
-					Part filePart = request.getPart("userAvatar");
+			
+			try {
+				Part filePart = request.getPart("userAvatar");
+				if (filePart.getSize() > 0) {
 					avatar = AmazonS3Util.awsUpload(filePart, _id.toString());
-				} catch (final Exception e) {
-					System.out.println("Upload failed" + e.getMessage());
 				}
+			} catch (final Exception e) {
+				System.out.println("Upload failed" + e.getMessage());
 			}
 		    
 			Document doc = new Document("_id", _id)
@@ -97,8 +96,7 @@ public class RegisterServlet extends HttpServlet {
 			if (country != null && !country.isEmpty()) locationDoc.append("country", country);
 			if (lat != null && !lat.isEmpty()) locationDoc.append("lat", Double.parseDouble(lat));
 			if (lng != null && !lng.isEmpty()) locationDoc.append("lng", Double.parseDouble(lng));
-			
-			doc.append("location", locationDoc);
+			if (!locationDoc.isEmpty()) doc.append("location", locationDoc);
 					
 			MongoCollection<Document> collection = database.getCollection("users");
 			collection.insertOne(doc);

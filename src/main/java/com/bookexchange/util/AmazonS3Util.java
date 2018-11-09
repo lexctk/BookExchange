@@ -45,6 +45,7 @@ public class AmazonS3Util {
 		    			.build();		    
 		    	s3Client.putObject(new PutObjectRequest("lexctkbookexchange", fileName, fileContent, md));
 		    	avatar = s3Client.getUrl("lexctkbookexchange", fileName).toString();
+		    	
 		    } catch (final AmazonServiceException ase) {
 		    	System.out.println("Request made it to Amazon S3 but was rejected: " + ase.getMessage());
 		    } catch (final AmazonClientException ace) {
