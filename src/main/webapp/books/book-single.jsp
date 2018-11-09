@@ -45,21 +45,46 @@
 				</div>		  
 			</div></div>
 		</div>
+		<c:choose>
+			<c:when test="${not empty isOwner && isOwner == true}">
+				<div class="row mt-2">
+					<div class="col-12 col-md-8 offset-md-2 d-flex justify-content-end">
+					<form id="deleteBook" action="${pageContext.request.contextPath}/app/books?id=${book.getId()}&_method=DELETE" method="POST">
+						<button class="btn btn-danger" form="deleteBook" type="submit"><i class="fas fa-trash-alt"></i> Delete from my books</button>
+					</form>
+					</div>
+				</div>
+				<h2 class="text-center spacer">Who else has this?</h2>
+			</c:when>
+			<c:otherwise>
+				<h2 class="text-center spacer">Who's trading for it?</h2>
+			</c:otherwise>
+		</c:choose>
+		
 		<div class="row spacer">
 			<div class="col-12 col-md-8 offset-md-2 spacer">
-				<div class="ui cards">
-					<c:forEach var="user" items="${users}">
+				<div class="ui cards d-flex justify-content-center">
+					<c:forEach var="user" items="${users}" varStatus="loop">
 						<div class="ui card">
 							<div class="content">
 								<div class="header"><c:out value='${user.getUsername()}'/></div>
 								<div class="meta">
-									<span class="right floated time">2 days ago</span>
-									<span class="category">Location</span>
+									<span class="right floated time">${dates[loop.index]}</span>
+									<span class="category">${user.getLocation().getLocality()}, ${user.getLocation().getCountry()}</span>
 								</div>
 							</div>
 							<div class="extra content">
 								<div class="center aligned author">
-									<img class="ui avatar image" src="../resources/images/user_turquoise.png"> ${user.getFirstname()}
+								<c:set var="avatar"><c:out value='${user.getAvatar()}'/></c:set>
+								<c:choose>
+									<c:when test="${not empty avatar}">
+										<img class="ui avatar image" src="${avatar}"> 
+									</c:when>
+									<c:otherwise>
+										<img class="ui avatar image" src="../resources/images/user_turquoise.png">
+									</c:otherwise>
+								</c:choose>
+								${user.getFirstname()}
 								</div>
 							</div>
 						</div>

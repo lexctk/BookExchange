@@ -363,6 +363,12 @@ p.hero-item {
 	background-image: url(../flags/4x3/gb.svg);
 }
 
+.ui.cards>.card img.avatar {
+	width: 4em;
+	height: 4em;
+	border-radius: 50%;
+}
+
 /* ----------------------------------------------------------------------------- */
 
 
@@ -408,20 +414,3 @@ footer {
 	background-color: #343a40;
 	padding: 2em 0;
 }
-
-/* -------------------------- TODO: delete if unused --------------------------- */
-.overlay {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-.overlay i {
-	font-size: 6em;
-}
-
-.absoluteUnit { /* for various testing */
-	height: 2000px!important;
-	background-color: cyan;
-}
-/* ----------------------------------------------------------------------------- */

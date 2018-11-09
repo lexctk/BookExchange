@@ -16,7 +16,6 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.bookexchange.mongodb.model.Book;
 import com.bookexchange.mongodb.model.UserBookList;
 import com.bookexchange.mongodb.model.User;
-import com.bookexchange.mongodb.model.BookOwnerInformation;
 import com.bookexchange.util.MiscUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -269,21 +268,5 @@ public class MongoUtil {
 
 		return books;
 	}	
-	
-	public static ArrayList<User> buildBookUsers(List<BookOwnerInformation> bookOwnerInformationList, MongoDatabase database) {
-		ArrayList<User> users = new ArrayList<User>();
-		MongoCollection<Document> collection = database.getCollection("users");
-		
-		for(BookOwnerInformation bookOwnerInformation : bookOwnerInformationList) {
-			var objectId = new ObjectId(bookOwnerInformation.getUserID());
-			FindIterable<Document> it = collection.find(eq("_id", objectId));
-			for(Document doc : it) {
-				String json = doc.toJson();
-				Gson gson = new GsonBuilder().create();
-	    		User user = gson.fromJson(json, User.class);
-	    		users.add(user);
-			}
-		}
-		return users;
-	}
+
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Properties;
@@ -68,5 +69,18 @@ public class MiscUtil {
 		LocalDate dateTime = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		DateTimeFormatter df_en = DateTimeFormatter.ofPattern("yyyy").withLocale(Locale.ENGLISH);
 		return dateTime.format(df_en);		
+	}
+	
+	public static String getDateDifference(String date) {
+		LocalDate now = LocalDate.now();
+		LocalDate dateTime = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		
+		Period period = Period.between(dateTime, now);
+		
+		if (period.getYears() > 0) return period.getYears() + "y";
+		if (period.getMonths() > 0) return period.getMonths() + "m";
+		if (period.getDays() > 0) return period.getDays() + "d";
+		
+		return "today";
 	}
 }
