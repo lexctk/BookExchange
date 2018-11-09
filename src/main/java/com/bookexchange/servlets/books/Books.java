@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.bookexchange.mongodb.model.Book;
@@ -28,6 +29,7 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Updates;
 
 
 /**
@@ -124,6 +126,7 @@ public class Books extends HttpServlet {
 			
 			MongoUtil.addBookToCollection(book, user, database);
 			response.sendRedirect("profile");
+			
 		} else if (method.equalsIgnoreCase("DELETE")) {
 			// delete book from database
 			
@@ -143,6 +146,31 @@ public class Books extends HttpServlet {
 				
 				if (objectId.equals(user.get_id())) {
 					// current user is owner and has permission to delete
+					MongoCollection<Document> collection;
+					Bson update;
+					
+					// remove book from user's list of books
+					update = Updates.pull("userBookList",
+							new Document("bookID", book.getId())
+					);
+					collection = database.getCollection("users");
+					collection.updateOne(eq("_id", user.get_id()), update);
+					
+					// remove user from book owners
+					if (bookOwnerInformationList.size() > 1) {
+						// book has other owners, delete user from owner list
+						update = Updates.pull("bookOwnerInformation",
+								new Document("userID", user.get_id().toString())
+						);
+						collection = database.getCollection("books");
+						collection.updateOne(eq("id", book.getId()), update);
+					} else {
+						// there are no other owners, delete book
+						collection = database.getCollection("books");
+						collection.deleteOne(new Document("id", book.getId()));
+					}
+					
+					break;
 				}
 			}
 			

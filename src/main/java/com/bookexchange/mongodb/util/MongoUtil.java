@@ -100,7 +100,6 @@ public class MongoUtil {
 
         return user;
 	}
-
 	
 	/**
 	 * Get one book based on id

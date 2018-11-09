@@ -124,7 +124,8 @@ public class Book {
 		String [] categories = this.volumeInfo.getCategories();
 		if (categories != null) {
 			for (int i = 0; i < categories.length; i++) {
-				allCategories.append(categories[i]);
+				String cat=categories[i].substring(0,1).toUpperCase() + categories[i].substring(1).toLowerCase();
+				allCategories.append(cat);
 				if (i < categories.length - 1) {
 					allCategories.append(", ");
 				}

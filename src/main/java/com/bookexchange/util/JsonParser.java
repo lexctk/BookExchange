@@ -25,7 +25,9 @@ public class JsonParser {
 	    	JSONObject jsonResponse = new JSONObject(jsonString);
 	    	
 	    	if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
-	    		//TODO: IMPORTANT: grab error message and translate to a user-friendly 404 response
+	    		return null;
+	    	}
+	    	if (!jsonResponse.has("items")) {
 	    		return null;
 	    	}
 	    	JSONArray jsonArray = jsonResponse.getJSONArray("items");

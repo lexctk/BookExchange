@@ -52,6 +52,19 @@ public class SearchAPI extends HttpServlet {
 		
 		ArrayList<Book> books = JsonParser.toBooks(json);
 		
+		if (books == null) {
+			StringBuilder buildHTML = new StringBuilder();
+			MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);
+			request.setAttribute("message", "No results found");
+			request.setAttribute("origin", "google");
+			request.getRequestDispatcher("/404.jsp").forward(request, mockHttpServletResponse);
+			buildHTML.append(mockHttpServletResponse.getOutput());
+			
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(buildHTML.toString());
+			return;
+		}
+		
 		StringBuilder buildHTML = new StringBuilder();
 		buildHTML.append("<div class='row'>");
 		

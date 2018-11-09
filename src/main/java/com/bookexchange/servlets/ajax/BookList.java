@@ -83,7 +83,8 @@ public class BookList extends HttpServlet {
 			for (int i = 0; i < books.size(); i++) {
 				String[] categoryList = books.get(i).getVolumeInfo().getCategories();
 				for (int j = 0; j< categoryList.length; j++) {
-					if (!categories.contains(categoryList[j])) categories.add(categoryList[j]);
+					String cat=categoryList[j].substring(0,1).toUpperCase() + categoryList[j].substring(1).toLowerCase();
+					if (!categories.contains(cat)) categories.add(cat);
 				}
 				String language = books.get(i).getLanguageName();
 				if (!languages.contains(language)) languages.add(language);
