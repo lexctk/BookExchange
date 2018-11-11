@@ -121,7 +121,7 @@ function processUserBooks (response) {
 	if ($('#book-list-filter').length) {
 		$('.filtr-container').imagesLoaded( function() {
 			var filterizr = $('.filtr-container').filterizr({
-				layout: 'sameHeight',
+				layout: 'sameWidth',
 				multifilterLogicalOperator: 'or'
 			});
 		});

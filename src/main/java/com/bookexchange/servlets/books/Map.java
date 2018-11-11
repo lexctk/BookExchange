@@ -19,7 +19,7 @@ import com.bookexchange.mongodb.util.MongoUtil;
 import com.mongodb.client.MongoDatabase;
 
 /**
- * Servlet implementation class BooksMap
+ * Servlet implementation class Map
  */
 @WebServlet("/app/books/map")
 public class Map extends HttpServlet {
