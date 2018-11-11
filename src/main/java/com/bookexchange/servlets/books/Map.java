@@ -47,8 +47,9 @@ public class Map extends HttpServlet {
 		
 		ArrayList<Location> locations = new ArrayList<Location>();
 		ArrayList<String> titles = new ArrayList<String>();
-		ArrayList<String> owners = new ArrayList<String>();
 		ArrayList<String> covers = new ArrayList<String>();
+		ArrayList<String> authors = new ArrayList<String>();
+		ArrayList<User> owners = new ArrayList<User>();
 		
 		// will be passed to google maps
 		for (Book book : books) {
@@ -70,8 +71,9 @@ public class Map extends HttpServlet {
 					} else locations.add(loc);
 					
 					titles.add(book.getTitle());
-					owners.add(bookOwnerInformation.getUserID());
+					owners.add(MongoUtil.getOneUser(bookOwnerInformation.getUserID(), database));
 					covers.add(book.getThumbnail());
+					authors.add(book.getAllAuthors());
 				}
 			}
 		}
@@ -83,6 +85,7 @@ public class Map extends HttpServlet {
 		request.setAttribute("owners", owners);
 		request.setAttribute("titles", titles);
 		request.setAttribute("covers", covers);
+		request.setAttribute("authors", authors);
 		
 		request.getRequestDispatcher("/books/map.jsp").forward(request, response);
 	}

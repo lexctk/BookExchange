@@ -95,7 +95,7 @@ public class Book {
 		StringBuilder allAuthors = new StringBuilder();
 		
 		String [] authors = this.volumeInfo.getAuthors();
-		if (authors != null) {
+		if (authors != null && authors.length > 0) {
 			for (int i = 0; i < authors.length; i++) {
 				allAuthors.append(authors[i]);
 				if (i < authors.length - 1) {
@@ -126,10 +126,12 @@ public class Book {
 		StringBuilder allCategories = new StringBuilder();
 		
 		String [] categories = this.volumeInfo.getCategories();
-		if (categories != null) {
+		if (categories != null && categories.length > 0) {
 			for (int i = 0; i < categories.length; i++) {
-				String cat=categories[i].substring(0,1).toUpperCase() + categories[i].substring(1).toLowerCase();
-				allCategories.append(cat);
+				if (categories[i].length() > 0) {
+					String cat=categories[i].substring(0,1).toUpperCase() + categories[i].substring(1).toLowerCase();
+					allCategories.append(cat);
+				}
 				if (i < categories.length - 1) {
 					allCategories.append(", ");
 				}

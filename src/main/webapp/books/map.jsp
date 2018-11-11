@@ -23,12 +23,25 @@ function initMap() {
 	
 	var markers = locations.map(function(location, i) {
 		var contentString = 
-			'<div id="content">' +
-		        '<h1 id="firstHeading" class="firstHeading">' + titles[i] + '</h1>' +
-		        '<div id="bodyContent d-flex flex-row align-items-center">'+
-		        	'<img class="map-image" src="' + covers[i] + '">'+
-		        	'<div class="map-user">Proof of concept book info: TODO: add user info</div>'
-		        '</div>'+
+			'<div id="content" class="d-flex flex-row align-items-top">' +
+				'<img class="map-image mr-2" src="' + covers[i] + '">' +
+		        '<div class="d-flex flex-column">' +
+		        	'<h3 class="m-0 ml-3">' + titles[i] + '</h3>' +
+		        	'<p class="m-0 ml-3">' + authors[i] + '</p>' + 		        	
+		        	'<div class="map-user ml-2 p-2">' +
+						'<div class="ui card">' +
+							'<div class="content d-flex flex-row align-items-center">' +
+								'<img class="ui avatar image" src="' + avatars[i] + '">' +
+								'<div class="header">' + usernames[i] + '</div>' +
+							'</div>' +
+							'<div class="extra content">' +
+								'<div class="message">' +
+									'Message stuff here' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+		        	'</div>' +
+		        '</div>' +
 	        '</div>';		
 		var marker = new google.maps.Marker({
 			position: location
@@ -56,6 +69,25 @@ var titles = [];
 var covers = [];
 <c:forEach var="cover" items="${covers}">
 	covers.push("${cover}");
+</c:forEach>
+var authors = [];
+<c:forEach var="author" items="${authors}">
+	authors.push("${author}");
+</c:forEach>
+var usernames = [];
+var avatars = [];
+<c:forEach var="owner" items="${owners}">
+	<c:set var="username"><c:out value='${owner.getUsername()}'/></c:set>
+	usernames.push("${username}");
+	<c:set var="avatar"><c:out value='${owner.getAvatar()}'/></c:set>
+	<c:choose>
+		<c:when test="${not empty avatar}">
+			avatars.push("${avatar}");
+		</c:when>
+		<c:otherwise>
+			avatars.push("${pageContext.request.contextPath}/resources/images/user_turquoise.png");
+		</c:otherwise>
+	</c:choose>	
 </c:forEach>
 </script>
 

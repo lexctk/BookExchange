@@ -2,6 +2,10 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 
 <div class="col-xs-12 col-md-4 col-lg-3 spacer">
+	<div class="d-flex flex-column">
+		<h2>Search near you</h2>
+		<a href="${pageContext.request.contextPath}/app/books/map"><img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/map-search.png"></a>
+	</div>
 	<h2>Filter</h2>
 	<div class="d-flex flex-column" id="book-list-filter">	
 		<h3>Categories</h3>
@@ -22,10 +26,6 @@
 				</div>
 			</div>
 		</c:forEach>		
-	</div>
-	<div class="d-flex flex-column spacer">
-		<h3>Search near you</h3>
-		<a href="${pageContext.request.contextPath}/app/books/map"><img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/map-search.png"></a>
 	</div>
 </div>
 <div class="col-xs-12 col-md-8 col-lg-9 spacer">

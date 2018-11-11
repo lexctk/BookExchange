@@ -120,6 +120,25 @@ public class MongoUtil {
 	}
 	
 	/**
+	 * Get one user based on id
+	 * @param id
+	 * @param database
+	 * @return User object
+	 */
+	public static User getOneUser (String id, MongoDatabase database) {
+		MongoCollection<Document> collection = database.getCollection("users");
+		
+		ObjectId _id = new ObjectId(id);
+		Document userDoc = collection.find(eq("_id", _id)).first();
+	
+		String json = userDoc.toJson();
+		Gson gson = new GsonBuilder().create();
+		User user = gson.fromJson(json, User.class);
+
+		return user;
+	}	
+	
+	/**
 	 * Add a book to the database and to a user's collection.
 	 * 
 	 * If the book already exists in the database, only add user to the 
