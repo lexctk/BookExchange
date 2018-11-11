@@ -96,3 +96,4 @@
 </section>
 
 <%@ include file="../partials/footer.jsp" %>
+<%@ include file="../partials/footer-end.jsp" %>

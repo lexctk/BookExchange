@@ -47,6 +47,10 @@ public class Book {
 		this.bookOwnerInformation = new ArrayList<BookOwnerInformation>(bookOwnerInformation);
 	}
 	
+	public void addBookOwnerInformation(BookOwnerInformation bookOwnerInformation) {
+		this.bookOwnerInformation.add(bookOwnerInformation);
+	}
+	
 	/**
 	 * Adds a user id to the list of users. 
 	 * 

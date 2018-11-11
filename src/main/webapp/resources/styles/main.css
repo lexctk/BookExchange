@@ -367,6 +367,7 @@ p.hero-item {
 	width: 4em;
 	height: 4em;
 	border-radius: 50%;
+	object-fit: cover;
 }
 
 /* ----------------------------------------------------------------------------- */
@@ -398,6 +399,27 @@ p.hero-item {
 
 /* ----------------------------------------------------------------------------- */
 
+
+/* ------------------------------------ Map ------------------------------------ */
+
+#map {
+	height: 400px;
+}
+
+.firstHeading {
+	font-size: 1.2em;
+}
+
+.map-image {
+	max-width: 100px!important;
+	height: auto;
+}
+.map-user {
+	display:inline!important;
+}
+/* ----------------------------------------------------------------------------- */
+
+
 .hidden {
 	display:none;
 }
@@ -413,8 +435,13 @@ footer {
 	color: white;
 	background-color: #343a40;
 	padding: 2em 0;
+	margin-top: 4em;
 }
 
 .error404 {
 	font-size: 1.5em;
+}
+
+.filtr-item {
+	padding: 1rem!important;
 }

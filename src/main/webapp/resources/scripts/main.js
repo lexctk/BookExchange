@@ -119,9 +119,11 @@ function processUserBooks (response) {
 	$('#book-list').html(response);
 	
 	if ($('#book-list-filter').length) {
-		var filterizr = $('.filtr-container').filterizr({
-			layout: 'sameHeight',
-			multifilterLogicalOperator: 'or'
+		$('.filtr-container').imagesLoaded( function() {
+			var filterizr = $('.filtr-container').filterizr({
+				layout: 'sameHeight',
+				multifilterLogicalOperator: 'or'
+			});
 		});
 	}
 }

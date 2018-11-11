@@ -36,3 +36,4 @@
 <div class="spacer"></div>
 
 <%@ include file="../partials/footer.jsp" %>
+<%@ include file="../partials/footer-end.jsp" %>

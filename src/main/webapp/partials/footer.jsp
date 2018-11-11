@@ -15,9 +15,9 @@
 		<!-- Semantic UI -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 		
+		<!-- Filterizr, Images Loaded -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/filterizr/1.3.5/jquery.filterizr.min.js"></script>
 
 		<!-- Book App -->
 		<script src="${pageContext.request.contextPath}/resources/scripts/main.js"></script>
-	</body>
-</html>

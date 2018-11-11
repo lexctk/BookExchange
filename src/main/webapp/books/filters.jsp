@@ -23,6 +23,10 @@
 			</div>
 		</c:forEach>		
 	</div>
+	<div class="d-flex flex-column spacer">
+		<h3>Search near you</h3>
+		<a href="${pageContext.request.contextPath}/app/books/map"><img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/map-search.png"></a>
+	</div>
 </div>
 <div class="col-xs-12 col-md-8 col-lg-9 spacer">
 	<h2>Books</h2>

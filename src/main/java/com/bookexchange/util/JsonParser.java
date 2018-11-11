@@ -71,7 +71,7 @@ public class JsonParser {
     		String categories, 
     		String language, 
     		String thumbnail,
-    		String identifiers) throws MalformedURLException {
+    		String identifiers) {
     	
 		Book book = new Book ();
 		VolumeInfo volumeInfo = new VolumeInfo ();
@@ -86,10 +86,15 @@ public class JsonParser {
 		String[] categoriesParse = categories.split(",\\s*");
 		volumeInfo.setCategories(categoriesParse);
 		volumeInfo.setLanguage(language);
-		URL url = new URL(thumbnail);
 		
-		imageLinks.setThumbnail(url.toString());
-		volumeInfo.setImageLinks(imageLinks);
+		try {
+			URL url;
+			url = new URL(thumbnail);
+			imageLinks.setThumbnail(url.toString());
+			volumeInfo.setImageLinks(imageLinks);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		
 		String[] identifiersParse = identifiers.split(",\\s*");
 

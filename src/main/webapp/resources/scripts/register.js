@@ -122,6 +122,3 @@ function geolocateUser () {
 	submitButton.disable = false;
 	submitButton.classList.remove("loading");
 }
-
-
-

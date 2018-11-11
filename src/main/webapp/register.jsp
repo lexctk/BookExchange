@@ -92,4 +92,12 @@
 	</div>
 </div>
 
-<%@ include file="partials/footer-geoform.jsp" %>
+<%@ include file="partials/footer.jsp" %>
+
+<!-- Include form validation -->
+<script src="${pageContext.request.contextPath}/resources/scripts/register.js"></script>
+		
+<!-- Google API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjtXfwU4ouU7RnfoT7tXheh6wBVV8UvZA&libraries=places&callback=initAutocomplete" async defer></script>
+
+<%@ include file="partials/footer-end.jsp" %>
