@@ -35,7 +35,6 @@
 					aria-expanded="false"> Account </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">Signed in as ${username}</a> 
-						<a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile">My Books</a>
 						<a class="dropdown-item" href="${pageContext.request.contextPath}/app/profile/edit">Edit profile</a>
 						<div class="dropdown-divider"></div>
 						<form action="${pageContext.request.contextPath}/logout" method="POST">

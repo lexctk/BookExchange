@@ -17,7 +17,7 @@
 								<img class="userAvatar" src="${avatar}">
 							</c:when>
 							<c:otherwise>
-								<img class="userAvatar" src="../resources/images/user_turquoise.png">
+								<img class="userAvatar" src="${pageContext.request.contextPath}/resources/images/user_turquoise.png">
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -29,7 +29,7 @@
 						</div>
 					</div>
 					<div class="extra content text-center">
-						<a><i class="map marker icon"></i>${user.getLocation().getLocality()}, ${user.getLocation().getCountry()}</a>
+						<i class="map marker icon"></i>${user.getLocation().getLocality()}, ${user.getLocation().getCountry()}
 					</div>
 					<div class="ui bottom attached button">
 						<a href="profile/edit"><i class="edit icon"></i> Edit</a>

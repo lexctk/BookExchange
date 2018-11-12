@@ -38,7 +38,7 @@ public class Events extends HttpServlet {
 		
 		String OpenDataAPI = System.getenv("OpenDataSoft");
 		if (OpenDataAPI == null) OpenDataAPI = MiscUtil.getValue ("OpenDataSoft");
-		String query = "&q=date_start>=" + MiscUtil.nowToString() + "&apikey=" + OpenDataAPI;
+		String query = "&q=date_end>=" + MiscUtil.nowToString() + "&apikey=" + OpenDataAPI;
 		
 		String json = MiscUtil.getJSONString("", "", baseAPI+query, fieldsAPI, "apikey", "OpenDataSoft");
 		

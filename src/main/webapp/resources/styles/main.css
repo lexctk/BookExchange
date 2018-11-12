@@ -274,6 +274,7 @@ p.hero-item {
         height:  100%!important;
     }
 }
+
 /* ----------------------------------------------------------------------------- */
 
 
@@ -449,4 +450,9 @@ footer {
 
 .filtr-item {
 	padding: 1rem!important;
+}
+
+.table {
+	border-collapse: separate!important;
+    border-spacing: 1em!important;	
 }
