@@ -8,8 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.bookexchange.mongodb.model.Book;
+import com.bookexchange.mongodb.model.Event;
 import com.bookexchange.mongodb.model.ImageLinks;
 import com.bookexchange.mongodb.model.IndustryIdentifiers;
+import com.bookexchange.mongodb.model.Location;
 import com.bookexchange.mongodb.model.VolumeInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,8 +19,12 @@ import com.google.gson.JsonSyntaxException;
 
 public class JsonParser {
 	
-    // Covert json string to ArrayList of Book objects
-	// (Gson doesn't work with ArrayList)
+    /**
+     * Covert a json string to ArrayList of Book objects using Gson
+     * 
+     * @param jsonString
+     * @return ArrayList<Book>
+     */
     public static ArrayList<Book> toBooks(String jsonString) {
         try {   	
 	    	// Parse the JSON response.
@@ -47,6 +53,49 @@ public class JsonParser {
             return null;
         }
     }
+    
+    
+    /**
+     * Covert a json string to ArrayList of Event objects using Gson
+     * 
+     * @param jsonString
+     * @return ArrayList<Event>
+     */
+    public static ArrayList<Event> toEvents(String jsonString) {
+        try {   	
+	    	// Parse the JSON response.
+	    	JSONObject jsonResponse = new JSONObject(jsonString);
+	    	
+	    	if (jsonResponse.has("error") && !jsonResponse.isNull("error")) {
+	    		return null;
+	    	}
+	    	if (!jsonResponse.has("records")) {
+	    		return null;
+	    	}
+	    	JSONArray jsonArray = jsonResponse.getJSONArray("records");
+	    	ArrayList<Event> events = new ArrayList<Event>();
+	    	
+	    	for (int i = 0; i < jsonArray.length(); i++) {
+	    		JSONObject jsonObject = jsonArray.getJSONObject(i).getJSONObject("fields");
+	    		
+	    		Gson gson = new GsonBuilder().create();
+	    		Event event = gson.fromJson(jsonObject.toString(), Event.class);
+	    		
+	    		Location location = new Location ();
+	    		JSONArray latlon = jsonObject.getJSONArray("latlon");
+	    		location.setLat(latlon.getDouble(0));
+	    		location.setLng(latlon.getDouble(1));
+	    		event.setLocation(location);
+	    		
+	    		events.add(event);
+	    	}
+	    	return events; 
+        }
+        catch(JsonSyntaxException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }    
     
     /**
      * 

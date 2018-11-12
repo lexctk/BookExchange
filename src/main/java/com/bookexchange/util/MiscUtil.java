@@ -1,7 +1,14 @@
 package com.bookexchange.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -83,4 +90,62 @@ public class MiscUtil {
 		
 		return "today";
 	}
+	
+	public static String getJSONString (String query, String index, String baseAPI, String fieldsAPI, String apiKeyName, String apiKeyEnv) throws RuntimeException, UnsupportedEncodingException {
+		
+		StringBuilder json = new StringBuilder(); 
+
+		query = URLEncoder.encode(query, "utf-8");
+		query = baseAPI + query + fieldsAPI;
+		
+		if (index.length()>0) {
+			query += "&startIndex=" + index;
+		}
+		
+		HttpURLConnection conn = null;
+        BufferedReader reader = null;
+        
+        try {  
+            URL url = new URL(query);  
+            
+            conn = (HttpURLConnection)url.openConnection();  
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            
+            String APIKey = System.getenv(apiKeyEnv);
+    		if (APIKey == null) APIKey = MiscUtil.getValue (apiKeyEnv);
+    		
+            conn.setRequestProperty(apiKeyName, APIKey);
+            
+            if (conn.getResponseCode() != 200) {
+                return ("{\"error\": \"API doesn't respond\"");
+            }
+            
+	        reader = new BufferedReader(new InputStreamReader(conn.getInputStream(),"utf-8"));
+	        
+            String output = null;  
+            while ((output = reader.readLine()) != null)  
+            	json.append(output);  
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
+            return ("{\"error\": \"Try again\"");
+        } catch(IOException e) {  
+            e.printStackTrace();
+            return ("{\"error\": \"Something went wrong\"");
+        }
+        finally {
+            if(reader!=null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(conn!=null) {
+                conn.disconnect();
+            }
+        }        
+        		
+		return json.toString();
+	}	
 }
