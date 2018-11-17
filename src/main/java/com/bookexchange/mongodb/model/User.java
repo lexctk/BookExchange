@@ -149,4 +149,8 @@ public class User {
 	public String getRegisteredYear() {
 		return MiscUtil.getRegisteredYear(this.registered);	
 	}
+	
+	public String getIdString () {
+		return this._id.toString();
+	}
 }

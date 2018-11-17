@@ -7,7 +7,11 @@
 		<a href="${pageContext.request.contextPath}/app/books/map"><img class="img-fluid" src="${pageContext.request.contextPath}/resources/images/map-search.png"></a>
 	</div>
 	<h2>Filter</h2>
-	<div class="d-flex flex-column" id="book-list-filter">	
+	<div class="d-flex flex-column" id="book-list-filter">
+		<div class="ui large icon input">
+		  <input type="text" name="search" placeholder="Search..." data-search>
+		  <i class="search icon"></i>
+		</div>
 		<h3>Categories</h3>
 		<c:forEach var="category" items="${categories}">
 			<div class="inline field">

@@ -12,7 +12,7 @@
 			
 			<form class="form-edit ui form spacer" action="edit" method="post" enctype="multipart/form-data">
 				<div class="row">
-					<div class="col-4">
+					<div class="col-12 col-sm-4">
 						<div class="image">
 							<c:set var="avatar"><c:out value='${user.getAvatar()}'/></c:set>
 							<c:choose>
@@ -25,7 +25,7 @@
 							</c:choose>
 						</div>					
 					</div>
-					<div class="col-8">
+					<div class="col-12 col-sm-8">
 						<div class="field">
 							<input type=text name="username" class="form-control" id="username" placeholder="${user.getUsername()}" value="${user.getUsername()}">
 						</div>

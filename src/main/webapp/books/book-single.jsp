@@ -75,16 +75,20 @@
 							</div>
 							<div class="extra content">
 								<div class="center aligned author">
-								<c:set var="avatar"><c:out value='${user.getAvatar()}'/></c:set>
-								<c:choose>
-									<c:when test="${not empty avatar}">
-										<img class="ui avatar image" src="${avatar}"> 
-									</c:when>
-									<c:otherwise>
-										<img class="ui avatar image" src="../resources/images/user_turquoise.png">
-									</c:otherwise>
-								</c:choose>
-								${user.getFirstname()}
+									<c:set var="avatar"><c:out value='${user.getAvatar()}'/></c:set>
+									<c:choose>
+										<c:when test="${not empty avatar}">
+											<img class="ui avatar image" src="${avatar}"> 
+										</c:when>
+										<c:otherwise>
+											<img class="ui avatar image" src="../resources/images/user_turquoise.png">
+										</c:otherwise>
+									</c:choose>
+									${user.getFirstname()}
+									<div class="ui two buttons mt-3">
+										<a class="ui basic button" href="${pageContext.request.contextPath}/app/email?id=${user.getIdString()}&bookId=${book.getId()}"><i class="fas fa-envelope-open"></i> Email</a>
+										<a class="ui basic button" href="${pageContext.request.contextPath}/app/profile?id=${user.getIdString()}"><i class="fas fa-external-link-alt"></i> Profile</a>
+									</div>
 								</div>
 							</div>
 						</div>

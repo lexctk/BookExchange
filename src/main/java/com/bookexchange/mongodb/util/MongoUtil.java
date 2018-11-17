@@ -134,6 +134,9 @@ public class MongoUtil {
 		String json = userDoc.toJson();
 		Gson gson = new GsonBuilder().create();
 		User user = gson.fromJson(json, User.class);
+		
+		// for some reason gson doesn't parse _id
+		user.set_id(_id);
 
 		return user;
 	}	
