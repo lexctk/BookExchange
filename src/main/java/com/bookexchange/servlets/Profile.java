@@ -34,12 +34,21 @@ public class Profile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
+		String id = request.getParameter("id");
+		
 		MongoConnection mongo = MongoConnection.getInstance();
 		MongoDatabase database = mongo.database;
 		
-		User user = MongoUtil.getCurrentUser(session, database);
-		request.setAttribute("user", user);
+		if (id == null || id.length() <= 0) {
+			HttpSession session = request.getSession(false);
+			User user = MongoUtil.getCurrentUser(session, database);
+			request.setAttribute("user", user);
+			request.setAttribute("visitor", false);
+		} else {
+			User user = MongoUtil.getOneUser(id, database);
+			request.setAttribute("user", user);
+			request.setAttribute("visitor", true);
+		}
 		request.getRequestDispatcher("/profile.jsp").forward(request, response);
 	}
 

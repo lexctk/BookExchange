@@ -17,7 +17,7 @@
 				<label>To</label>
 				<input type="text" name="nameRecipient" value="${nameRecipient}" readonly>
 			</div>	
-			<div class="field">
+			<div class="field hidden">
 				<label>To</label>
 				<input type="text" name="idRecipient" value="${idRecipient}" readonly>
 			</div>					

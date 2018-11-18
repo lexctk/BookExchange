@@ -80,6 +80,7 @@ public class Email extends HttpServlet {
 		User recipient = MongoUtil.getOneUser(idRecipient, database);
 		
 		SendGridMailer.sendEmail(sender.getEmail(), recipient.getEmail(), emailSubject, emailContent);
+		response.sendRedirect(request.getContextPath() + "/app/dashboard");
 	}
 
 }

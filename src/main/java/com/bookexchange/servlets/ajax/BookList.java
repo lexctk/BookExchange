@@ -40,14 +40,23 @@ public class BookList extends HttpServlet {
 		
 		String listType = "";
 		String urlType = "";
+		String visitorId = "";
+		
 		boolean filter = false;
 		
 		// get ajax query parameter
 		String classes = request.getParameter("classes");
 		if (classes != null) {
 			List<String> options = new ArrayList<String>(Arrays.asList(classes.split(" ")));
-			if (options.contains("list-user")) listType = "user";
-			if (options.contains("list-all")) listType = "all";
+			if (options.contains("list-user")) listType = "user"; //display books belonging to current user
+			if (options.contains("list-visitor")) {
+				//display books belonging to another user
+				listType = "visitor"; 
+				for (String option : options) {
+					if (option.startsWith("id-")) visitorId = option.substring(3);
+				}
+			}
+			if (options.contains("list-all")) listType = "all"; //display all books in collection
 			if (options.contains("list-filter")) filter = true;
 		}
 		
@@ -63,6 +72,10 @@ public class BookList extends HttpServlet {
 				books = MongoUtil.buildUserBooks(session, database);
 				urlType = "";  //urlType = "/edit";
 				break;
+			case "visitor":  
+				books = MongoUtil.buildUserIdBooks(visitorId, database);
+				urlType = "";  //urlType = "/edit";
+				break;				
 			case "all":
 				books = MongoUtil.buildAllBooks(session, database);
 				urlType = "";

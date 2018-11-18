@@ -256,6 +256,27 @@ public class MongoUtil {
 		return books;
 	}
 
+	public static ArrayList<Book> buildUserIdBooks(String id, MongoDatabase database) {
+		
+		ArrayList<Book> books = new ArrayList<Book>();
+		MongoCollection<Document> collection = database.getCollection("books");
+		
+		User user = getOneUser(id, database);
+		
+		if (user.getUserBookList() != null) {
+			for(UserBookList userBookList : user.getUserBookList()) {
+				
+				FindIterable<Document> it = collection.find(eq("id", userBookList.getBookID()));
+				for(Document doc : it) {
+					String json = doc.toJson();
+					Gson gson = new GsonBuilder().create();
+		    		Book book = gson.fromJson(json, Book.class);
+		    		books.add(book);
+				}
+			}
+		}
+		return books;
+	}
 	
 	/**
 	 * Build a list of all the books in the database, excluding books current user owns
