@@ -35,8 +35,9 @@ function initMap() {
 								'<div class="header">' + usernames[i] + '</div>' +
 							'</div>' +
 							'<div class="extra content">' +
-								'<div class="message">' +
-									'Message stuff here' +
+								'<div class="ui two buttons">' + 
+									'<a class="ui basic button" href="${pageContext.request.contextPath}/app/email?id=' + userIds[i] + '&bookId=' + bookIds[i] + '"><i class="fas fa-envelope-open"></i> Email</a>' +
+									'<a class="ui basic button" href="${pageContext.request.contextPath}/app/profile?id=' + userIds[i] + '"><i class="fas fa-external-link-alt"></i> Profile</a>' +
 								'</div>' +
 							'</div>' +
 						'</div>' +
@@ -74,11 +75,18 @@ var authors = [];
 <c:forEach var="author" items="${authors}">
 	authors.push("${author}");
 </c:forEach>
+var bookIds = [];
+<c:forEach var="bookId" items="${bookIds}">
+	bookIds.push("${bookId}");
+</c:forEach>
 var usernames = [];
 var avatars = [];
+var userIds = [];
 <c:forEach var="owner" items="${owners}">
 	<c:set var="username"><c:out value='${owner.getUsername()}'/></c:set>
 	usernames.push("${username}");
+	<c:set var="id"><c:out value='${owner.getIdString()}'/></c:set>
+	userIds.push("${id}");
 	<c:set var="avatar"><c:out value='${owner.getAvatar()}'/></c:set>
 	<c:choose>
 		<c:when test="${not empty avatar}">

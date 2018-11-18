@@ -43,10 +43,7 @@ public class Email extends HttpServlet {
 		
 		// get recipient from id
 		String id = request.getParameter("id");
-		System.out.println("do get id param is " + id);
 		User recipient = MongoUtil.getOneUser(id, database);
-		System.out.println("getOneUser name is " + recipient.getUsername());
-		System.out.println("getOneUser id is " + recipient.get_id().toString());
 		
 		request.setAttribute("idRecipient", recipient.get_id().toString());
 		request.setAttribute("nameRecipient", recipient.getUsername());
@@ -67,10 +64,6 @@ public class Email extends HttpServlet {
 		String idRecipient = request.getParameter("idRecipient");
 		String emailSubject = request.getParameter("emailSubject");
 		String emailContent = request.getParameter("emailContent");
-		
-		System.out.println(idRecipient);
-		System.out.println(emailSubject);
-		System.out.println(emailContent);
 		
 		HttpSession session = request.getSession(false);
 		MongoConnection mongo = MongoConnection.getInstance();

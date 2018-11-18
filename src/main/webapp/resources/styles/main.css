@@ -7,6 +7,11 @@
 	border-radius: 30px;
 }
 
+.btn-green {
+	color: #2eb319!important;
+	border: 1px solid #2eb319!important;
+}
+
 .btn-gradient {
 	box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 	background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
@@ -261,6 +266,10 @@ p.hero-item {
 	margin-top: 35px!important;
 }
 
+.spacer-lg {
+	margin-top: 60px!important;
+}
+
 .spacer-navbar { /* prevent the navbar from overlapping element */
 	padding-top: 72px!important;
 }
@@ -329,6 +338,10 @@ p.hero-item {
 	height: 290px !important;
  	border-radius: 50%!important;
 	padding: 30px; 
+	object-fit: cover;
+}
+
+.ui.avatar.image {
 	object-fit: cover;
 }
 

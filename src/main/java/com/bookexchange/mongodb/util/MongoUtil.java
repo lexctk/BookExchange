@@ -3,6 +3,7 @@ package com.bookexchange.mongodb.util;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.and;
@@ -228,6 +229,24 @@ public class MongoUtil {
         return bookAdded;
 	}
 	
+	public static boolean addEventToUser (String eventId, User user, MongoDatabase database) {
+		boolean eventAdded = false;
+
+        MongoCollection<Document> collection = database.getCollection("users");
+        Document findUser = collection.find(eq("_id", user.get_id())).first();
+        
+        if (findUser == null) {
+        	//TODO: handle error: this is an exception, user should be logged in so should exist in the database!
+        } else {
+        	collection.updateOne(
+        			eq("_id", user.get_id()),
+        			new Document("$push", new Document("eventList", eventId)));
+        	eventAdded = true;
+        }
+        return eventAdded;
+	}	
+
+	
 	/**
 	 * Build a lit of books the current user owns. 
 	 * @param session
@@ -308,6 +327,16 @@ public class MongoUtil {
     		books.add(book);
 		}
 
+		return books;
+	}	
+
+	public static ArrayList<Book> buildRecentBooks(HttpSession session, MongoDatabase database) {
+		ArrayList<Book> books = buildAllBooks(session, database);
+		Collections.reverse(books);
+		if (books.size() > 12) {
+			ArrayList<Book> recentBooks = new ArrayList<Book>(books.subList(0, 12));
+			return recentBooks;
+		}
 		return books;
 	}	
 

@@ -21,6 +21,7 @@ public class User {
 	private String avatar;
 	private Location location;
 	private List<UserBookList> userBookList;
+	private List<String> eventList;
 
 	public User() {
 	}
@@ -152,5 +153,14 @@ public class User {
 	
 	public String getIdString () {
 		return this._id.toString();
+	}
+
+	public List<String> getEventList() {
+		if (eventList == null) return null;
+		return Collections.unmodifiableList(eventList);
+	}
+
+	public void setEventList(List<String> eventList) {
+		this.eventList = new ArrayList<String>(eventList);
 	}
 }

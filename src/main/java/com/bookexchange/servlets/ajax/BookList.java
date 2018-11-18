@@ -57,6 +57,7 @@ public class BookList extends HttpServlet {
 				}
 			}
 			if (options.contains("list-all")) listType = "all"; //display all books in collection
+			if (options.contains("list-recent")) listType = "recent";
 			if (options.contains("list-filter")) filter = true;
 		}
 		
@@ -80,6 +81,10 @@ public class BookList extends HttpServlet {
 				books = MongoUtil.buildAllBooks(session, database);
 				urlType = "";
 				break;
+			case "recent":
+				books = MongoUtil.buildRecentBooks(session, database);
+				urlType = "";
+				break;				
 		}
 
 		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse (response);

@@ -1,5 +1,9 @@
 package com.bookexchange.mongodb.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Event {
 	
 	private String lang;
@@ -18,7 +22,7 @@ public class Event {
 	private String date_end;
 	private String description;
 	private Location location;
-	
+	private List<User> users;
 	
 	public String getLang() {
 		return lang;
@@ -147,5 +151,13 @@ public class Event {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
+	public List<User> getUsers() {
+		if (users == null) return null;
+		return Collections.unmodifiableList(users);
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = new ArrayList<User>(users);
+	}
 }
