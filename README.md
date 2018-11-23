@@ -1,2 +1,6 @@
 # BookExchange
-Book Exchange app using Java Servlets, Google Books and Google Maps
+Book Exchange web app using pure Java Servlets, Google Books API, Google Maps API, AWS and OpenDataSoft.
+
+Sorbonne University 2018 (DAR)
+
+https://book-exch.herokuapp.com
